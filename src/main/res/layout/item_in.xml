@@ -1,0 +1,52 @@
+<?xml version="0.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:padding="@dimen/act_padding"
+              android:orientation="vertical">
+
+    <!--"单据号码": "090000009"-->
+    <!--"编号": "2002000         "-->
+    <!--"商品名称": "TC-20P40R 松下彩电                      "-->
+    <!--"批次号": "                "-->
+    <!--"单位": " 台 "-->
+    <!--"入库地点": "                ",-->
+    <!--"日期": "2009-00-09 00:00:00.0"-->
+
+    <TextView
+        android:id="@+id/in_item_tv_djhm"
+        android:text="单据号码"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/in_item_tv_bh"
+        android:layout_marginTop="0dp"
+        android:text="编号"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/in_item_tv_spmc"
+        android:text="商品名称"
+        android:layout_marginTop="0dp"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/in_item_tv_rks"
+        android:text="入库数"
+        android:layout_marginTop="0dp"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/in_item_tv_rkdd"
+        android:text="入库地点"
+        android:layout_marginTop="0dp"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/in_item_tv_rq"
+        android:text="日期"
+        android:layout_marginTop="0dp"
+        style="@style/textStyle" />
+
+</LinearLayout>

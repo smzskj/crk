@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bgAct"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <include layout="@layout/include_topbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <Spinner
+                    android:id="@+id/select_repertory_sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_repertory_xl">
+
+                </Spinner>
+
+                <Button
+                    android:id="@+id/select_repertory_btn_get"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_repertory_xl"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="重新获取仓库信息"
+                    android:textSize="@dimen/textSize_small"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/select_repertory_btn_in"
+                style="@style/btnStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/bg_repertory_in_select" />
+
+            <Button
+                android:id="@+id/select_repertory_btn_out"
+                style="@style/btnStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_repertory_out_select" />
+
+            <Button
+                android:id="@+id/select_repertory_btn_check"
+                style="@style/btnStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_repertory_check_select" />
+
+            <Button
+                android:id="@+id/select_repertory_btn_query"
+                style="@style/btnStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_repertory_cx_select" />
+
+            <Button
+                android:id="@+id/select_repertory_btn_offline"
+                style="@style/btnStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_repertory_offline_select" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

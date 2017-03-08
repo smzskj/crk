@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">出入库系统</string>
+
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">松开刷新数据</string>
+    <string name="xlistview_header_hint_loading">正在加载。。。</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+
+    <string name="loading">正在加载中。。。</string>
+    <string name="loading_error">数据加载失败请稍后重试</string>
+    <string name="loading_empty">没有查询到数据</string>
+    <string name="confirm">确定</string>
+    <string name="cancle">取消</string>
+    <string name="query">查询</string>
+    <string name="upload">上传</string>
+
+    <string name="scanner_error">扫描号码不合法</string>
+
+
+    <string name="login">登录</string>
+    <string name="logout">退出登录</string>
+    <string name="userName_null">用户名不能为空</string>
+    <string name="userName">账号</string>
+    <string name="pwddd_null">密码不能为空</string>
+    <string name="pwddd">登录密码</string>
+
+    <string name="select_repertory">出入库系统</string>
+    <string name="repertory_in">入库</string>
+    <string name="repertory_in_confirm">入库确认</string>
+    <string name="repertory_dz">出库登账</string>
+    <string name="repertory_out">出库</string>
+    <string name="repertory_check">盘点</string>
+    <string name="repertory_query">查询</string>
+
+
+    <string name="code_number">0123456789,</string>
+    <string name="digists">0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+
+    <string name="dialog_y">是</string>
+    <string name="dialog_n">否</string>
+    <string name="dialog_alert">提示</string>
+
+    <string name="offline">离线操作</string>
+    <string name="offline_pd">离线盘点</string>
+    <string name="offline_ck">离线出库</string>
+    <string name="offline_pd_up">盘点上传</string>
+    <string name="offline_ck_up">出库上传</string>
+    <string name="offline_update_sp">更新商品</string>
+
+    <string name="pds_int">盘点数:%d</string>
+    <string name="scs_int">上传数:%d</string>
+
+
+    
+
+
+</resources>

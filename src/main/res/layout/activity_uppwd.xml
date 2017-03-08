@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/top"
+        layout="@layout/include_topbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/act_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textStyle"
+                android:text="旧密码" />
+
+            <EditText
+                android:id="@+id/uppwd_ed_old"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ed_shape"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textStyle"
+                android:text="新密码" />
+
+            <EditText
+                android:id="@+id/uppwd_ed_new1"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ed_shape"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textStyle"
+                android:text="重复密码" />
+
+            <EditText
+                android:id="@+id/uppwd_ed_new2"
+                android:layout_width="match_parent"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ed_shape"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/uppwd_btn_ok"
+            style="@style/btnStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="确定" />
+
+    </LinearLayout>
+</LinearLayout>

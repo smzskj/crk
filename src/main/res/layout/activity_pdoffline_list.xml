@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/include_topbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/act_margin">
+
+        <Button
+            android:id="@+id/pdoffline_btn_query"
+            style="@style/btnStyle"
+            android:layout_alignParentRight="true"
+            android:text="@string/query" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/act_margin"
+            android:layout_toLeftOf="@id/pdoffline_btn_query"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/pdoffline_btn_rqq"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ed_shape" />
+
+            <TextView
+                style="@style/textStyle"
+                android:text="至" />
+
+            <Button
+                android:id="@+id/pdoffline_btn_rq"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ed_shape" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!--<include layout="@layout/item_pdoffline" />-->
+
+    <com.smzskj.crk.view.xlistview.XListView
+        android:id="@+id/pdoffline_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/act_margin">
+
+    </com.smzskj.crk.view.xlistview.XListView>
+
+</LinearLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/include_topbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="10dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="10dp">
+
+        <Button
+            android:id="@+id/offline_btn_pd"
+            style="@style/btnStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:text="@string/offline_pd" />
+
+        <Button
+            android:id="@+id/offline_btn_pd_up"
+            style="@style/btnStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:text="@string/offline_pd_up" />
+
+        <Button
+            android:id="@+id/offline_btn_ck"
+            style="@style/btnStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:text="@string/offline_ck" />
+
+        <Button
+            android:id="@+id/offline_btn_ck_pu"
+            style="@style/btnStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:text="@string/offline_ck_up" />
+
+        <Button
+            android:id="@+id/offline_btn_update_sp"
+            style="@style/btnStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:text="@string/offline_update_sp" />
+    </LinearLayout>
+
+</LinearLayout>

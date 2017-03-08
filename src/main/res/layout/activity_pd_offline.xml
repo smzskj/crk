@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <include
+        android:id="@+id/top"
+        layout="@layout/include_topbar" />
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorDivider" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <ImageButton
+                android:id="@+id/offline_ib_sm2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/act_padding"
+                android:background="@null"
+                android:padding="5dp"
+                android:src="@drawable/ic_sm" />
+
+            <EditText
+                android:id="@+id/offline_ed_pch2"
+                style="@style/textStyle"
+                android:layout_width="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/act_padding"
+                android:layout_toLeftOf="@id/offline_ib_sm2"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="请输入批次码"
+                android:inputType="number"
+                android:singleLine="true" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/colorDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/offline_ll_pd"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_qrbjx" />
+
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/offline_pd" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorDivider" />
+
+            <LinearLayout
+                android:id="@+id/offline_ll_qh"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_qhsp" />
+
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_marginLeft="10dp"
+                    android:text="切换商品" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom"
+        android:layout_below="@id/top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/act_padding">
+
+            <TextView
+                android:id="@+id/offline_tv_rq"
+                style="@style/textStyle"
+                android:text="日期" />
+
+            <TextView
+                android:id="@+id/offline_tv_db"
+                style="@style/textStyle"
+                android:text="数据库" />
+
+            <TextView
+                android:id="@+id/offline_tv_kf"
+                style="@style/textStyle"
+                android:text="库房" />
+
+            <TextView
+                android:id="@+id/offline_tv_ry"
+                style="@style/textStyle"
+                android:text="人员" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <Button
+                    android:id="@+id/offline_btn_add"
+                    style="@style/btnStyle"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/act_padding"
+                    android:text="查询" />
+
+                <ImageButton
+                    android:id="@+id/offline_ib_sm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/act_padding"
+                    android:layout_toLeftOf="@id/offline_btn_add"
+                    android:background="@null"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_sm" />
+
+                <EditText
+                    android:id="@+id/offline_ed_sph"
+                    style="@style/textStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="@dimen/act_padding"
+                    android:layout_toLeftOf="@id/offline_ib_sm"
+                    android:background="@drawable/bg_ed_shape"
+                    android:gravity="center"
+                    android:hint="请输入商品号"
+                    android:inputType="number"
+                    android:singleLine="true" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/offline_tv_spm"
+                style="@style/textStyle"
+                android:text="商品名:" />
+
+            <TextView
+                android:id="@+id/offline_tv_pds"
+                style="@style/textStyle"
+                android:text="盘点数" />
+
+            <com.smzskj.crk.view.ListViewInScroll
+                android:id="@+id/offline_lv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/act_margin">
+
+            </com.smzskj.crk.view.ListViewInScroll>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

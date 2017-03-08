@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/bg_repertory_rk" android:state_pressed="false" />
+    <item android:drawable="@drawable/bg_repertory_rkdj" android:state_pressed="true" />
+</selector>

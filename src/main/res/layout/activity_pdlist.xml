@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/include_topbar" />
+
+    <LinearLayout
+        android:id="@+id/pd_ll_query"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cx" />
+
+        <TextView
+            style="@style/textStyle"
+            android:layout_marginLeft="10dp"
+            android:text="查询" />
+    </LinearLayout>
+
+    <com.smzskj.crk.view.xlistview.XListView
+        android:id="@+id/pd_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/transparent"
+        android:dividerHeight="10dp">
+
+    </com.smzskj.crk.view.xlistview.XListView>
+
+</LinearLayout>

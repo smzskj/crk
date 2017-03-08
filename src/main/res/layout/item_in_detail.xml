@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              android:padding="@dimen/act_padding">
+
+    <TextView
+        android:id="@+id/detail_item_tv_pch"
+        android:text="批次号"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/detail_item_tv_djhm"
+        android:text="单据号码"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/detail_item_tv_bh"
+        android:text="编号"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/detail_item_tv_spmc"
+        android:text="商品名称"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/detail_item_tv_rks"
+        android:text="入库数"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/detail_item_tv_rkdd"
+        android:text="入库地点"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/detail_item_tv_rq"
+        android:text="日期"
+        style="@style/textStyle" />
+
+</LinearLayout>

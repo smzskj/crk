@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/bg_ed_shape"
+              android:orientation="vertical"
+              android:padding="@dimen/act_padding">
+
+    <TextView
+        android:id="@+id/item_pdofflineup_kf"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/item_pdofflineup_sph"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/item_pdofflineup_pch"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/item_pdofflineup_zt"
+        style="@style/textStyle" />
+
+</LinearLayout>

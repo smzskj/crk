@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/item_pfoffline_ll"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/bg_ed_shape"
+              android:orientation="vertical"
+              android:layout_margin="@dimen/act_padding"
+              android:padding="@dimen/act_padding">
+
+    <TextView
+        android:id="@+id/item_pfoffline_tv_sjk"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/item_pfoffline_tv_kf"
+        android:visibility="gone"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/item_pfoffline_tv_ry"
+        style="@style/textStyle" />
+
+    <TextView
+        android:id="@+id/item_pfoffline_tv_rq"
+        style="@style/textStyle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/item_pfoffline_tv_pds"
+            style="@style/textStyle"
+            android:layout_width="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/item_pfoffline_tv_scs"
+            style="@style/textStyle"
+            android:layout_width="0dp"
+            android:visibility="gone"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/pdup_btn_up"
+        style="@style/btnStyle"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_margin="@dimen/act_padding"
+        android:text="@string/upload" />
+
+</LinearLayout>
