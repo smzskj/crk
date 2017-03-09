@@ -93,9 +93,13 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 
 	private EditText edSbm;
 	private Button btnSbm;
-	/** 商品码 */
+	/**
+	 * 商品码
+	 */
 	private ListViewInScroll lvSbm;
-	/** 商品码适配器 */
+	/**
+	 * 商品码适配器
+	 */
 	private SbhAdapter adapterSbm;
 
 
@@ -249,21 +253,13 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 			}
 		} else if (v == btnSbm) {
 			String sbm = edSbm.getText().toString().trim();
+			edSbm.setText("");
 			if (TextUtils.isEmpty(sbm)) {
 				makeShortToase("请输入识别码");
-			} else if (edSph.isEnabled()){
+			} else if (edSph.isEnabled()) {
 				makeShortToase("请选择商品");
 			} else {
-				if (sbmList.contains(sbm)) {
-					makeShortToase("此商品标识码已经录入");
-					edSbm.setText("");
-				} else {
-//					sbmList.add(sbm);
-					sbmList.add(0, sbm);
-					adapterSbm.notifyDataSetChanged();
-					edSbm.setText("");
-					tvCount.setText("" + sbmList.size());
-				}
+				addSbm(sbm);
 			}
 		} else if (v == llQh) {
 			// 切换商品
@@ -457,6 +453,7 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 			sbmBeanList.add(bean);
 			sbmList = bean.getSbmList();
 		}
+		tvCount.setText("" + sbmList.size());
 		adapterSbm = new SbhAdapter(mContext, sbmList);
 		lvSbm.setAdapter(adapterSbm);
 
@@ -493,28 +490,11 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 						makeShortToase(R.string.scanner_error);
 						return;
 					}
-					String sbm = tvSbm.getText().toString().trim();
-					if (TextUtils.isEmpty(sbm)) {
-						tvSbm.setText(barCode);
-//						sbmList.add(barCode);
-						sbmList.add(0, barCode);
-						adapterSbm.notifyDataSetChanged();
-						tvCount.setText("" + sbmList.size());
 
+					if (sbmList.contains(barCode)) {
+						makeShortToase("此商品标识码已经录入");
 					} else {
-						if (sbmList.contains(barCode)) {
-							makeShortToase("此商品标识码已经录入");
-						} else {
-							tvSbm.append("\n" + barCode);
-							try {
-//								sbmList.add(barCode);
-								sbmList.add(0, barCode);
-								adapterSbm.notifyDataSetChanged();
-								tvCount.setText("" + sbmList.size());
-							} catch (NumberFormatException e) {
-								tvCount.setText("1");
-							}
-						}
+						addSbm(barCode);
 					}
 				}
 
@@ -525,6 +505,31 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 			}
 		});
 		scanner.scanner();
+	}
+
+	/**
+	 * 添加商品号
+	 * @param barCode 商品号
+	 */
+	private void addSbm(String barCode) {
+		boolean isSbm = false;
+		for (InSbmBean bean : sbmBeanList) {
+			if (bean.getSbmList().contains(barCode)) {
+				isSbm = true;
+				break;
+			}
+		}
+		if (!isSbm) {
+			try {
+				sbmList.add(0, barCode);
+				adapterSbm.notifyDataSetChanged();
+				tvCount.setText("" + sbmList.size());
+			} catch (NumberFormatException e) {
+				tvCount.setText("1");
+			}
+		} else {
+			makeShortToase("批次号已经存在");
+		}
 	}
 
 	/**
