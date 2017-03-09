@@ -1,4 +1,4 @@
-package com.smzskj.crk.offline;
+package com.smzskj.crk.offline.activity;
 
 import android.app.Activity;
 import android.content.Intent;

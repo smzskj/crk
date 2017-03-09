@@ -18,7 +18,7 @@ import com.smzskj.crk.bean.RepertoryBean;
 import com.smzskj.crk.net.HttpJsonRequest;
 import com.smzskj.crk.net.Method;
 import com.smzskj.crk.net.ReturnBean;
-import com.smzskj.crk.offline.OffineActivity;
+import com.smzskj.crk.offline.activity.OffineActivity;
 import com.smzskj.crk.utils.JsonUtils;
 import com.smzskj.crk.utils.L;
 import com.smzskj.crk.utils.ThreadPoolUtils;
