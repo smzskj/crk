@@ -36,6 +36,8 @@ public class Method {
 	public static String RK_GET_RKINFO_DETAIL = "rk_get_rkinfo_detail";
 	/** 入库 */
 	public static String RK_RK = "rk_rk";
+	/** 入库V2 */
+	public static String RK_RK_V2 = "rk_rk_v2";
 
 	/** webservice 出库 */
 	public static String SERVICE_NAME_CK = "ckBean";

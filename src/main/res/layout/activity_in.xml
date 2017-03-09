@@ -53,6 +53,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -64,6 +65,27 @@
                     style="@style/textStyle"
                     android:layout_marginLeft="10dp"
                     android:text="@string/cancle" />
+            </LinearLayout>
+
+            <!--取消改为切换商品-->
+
+            <LinearLayout
+                android:id="@+id/in_ll_qh"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_qhsp" />
+
+                <TextView
+                    style="@style/textStyle"
+                    android:layout_marginLeft="10dp"
+                    android:text="切换商品" />
             </LinearLayout>
 
         </LinearLayout>

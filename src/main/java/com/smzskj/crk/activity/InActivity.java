@@ -25,6 +25,7 @@ import com.smzskj.crk.base.BaseActivity;
 import com.smzskj.crk.base.BaseViewAdapter;
 import com.smzskj.crk.base.BaseViewHolder;
 import com.smzskj.crk.bean.InRkBean;
+import com.smzskj.crk.bean.InSbmBean;
 import com.smzskj.crk.bean.InSpBean;
 import com.smzskj.crk.bean.RkDhBean;
 import com.smzskj.crk.net.HttpJsonRequest;
@@ -49,6 +50,12 @@ import java.util.List;
  * Created by ztt on 2017/1/17.
  * <p>
  * 入库
+ * <p>
+ * 1、获得一个单号：rk_get_dh
+ * 2、根据商品号获得商品信息列表，dialog中选择一个商品(对此商品入库)：rk_get_spinfo
+ * 3、扫描输入商品码，添加到列表
+ * 3+1、切换商品
+ * 4、入库：rk_rk_v2
  */
 
 public class InActivity extends BaseActivity implements View.OnClickListener, View
@@ -62,7 +69,7 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 	private TextView tvCount, tvDh, tvCk;
 	private ImageButton ibScanner;
 	private ImageButton btnScanner;
-	private LinearLayout llIn, llCancle;
+	private LinearLayout llIn, llCancle, llQh;
 
 	private String getDh = "获取单号";
 
@@ -79,12 +86,18 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 
 	private String dw = "";
 	private List<String> sbmList = new ArrayList<>();
-
+	/**
+	 * 商品信息
+	 */
+	private List<InSbmBean> sbmBeanList = new ArrayList<>();
 
 	private EditText edSbm;
 	private Button btnSbm;
+	/** 商品码 */
 	private ListViewInScroll lvSbm;
+	/** 商品码适配器 */
 	private SbhAdapter adapterSbm;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +133,7 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 		tvCk = findView(R.id.in_tv_ck);
 		llIn = findView(R.id.in_ll_in);
 		llCancle = findView(R.id.in_ll_query);
+		llQh = findView(R.id.in_ll_qh);
 		ibScanner = findView(R.id.in_ib_sm);
 		btnScanner = findView(R.id.in_btn_scanner);
 
@@ -129,6 +143,7 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 		tvDh.setOnClickListener(this);
 		llIn.setOnClickListener(this);
 		llCancle.setOnClickListener(this);
+		llQh.setOnClickListener(this);
 		ibScanner.setOnClickListener(this);
 		btnScanner.setOnClickListener(this);
 
@@ -196,7 +211,7 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 					public void onClick(DialogInterface dialog, int which) {
 						sbmList.remove(sbmList.get(position));
 						adapterSbm.notifyDataSetChanged();
-						tvCount.setText(""+sbmList.size());
+						tvCount.setText("" + sbmList.size());
 
 						dialog.cancel();
 					}
@@ -213,7 +228,7 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.cancel();
-					ck_get_ckinfo();
+					rk_rk_v2();
 				}
 			});
 		} else if (v == llCancle) {
@@ -236,19 +251,37 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 			String sbm = edSbm.getText().toString().trim();
 			if (TextUtils.isEmpty(sbm)) {
 				makeShortToase("请输入识别码");
-			}else {
+			} else if (edSph.isEnabled()){
+				makeShortToase("请选择商品");
+			} else {
 				if (sbmList.contains(sbm)) {
 					makeShortToase("此商品标识码已经录入");
 					edSbm.setText("");
 				} else {
 //					sbmList.add(sbm);
-					sbmList.add(0,sbm);
+					sbmList.add(0, sbm);
 					adapterSbm.notifyDataSetChanged();
 					edSbm.setText("");
-					tvCount.setText(""+sbmList.size());
+					tvCount.setText("" + sbmList.size());
 				}
 			}
+		} else if (v == llQh) {
+			// 切换商品
+			switchSp();
 		}
+	}
+
+	/**
+	 * 切换商品
+	 */
+	private void switchSp() {
+		edSph.setText("");
+		edSph.setEnabled(true);
+		edSpm.setText("");
+		tvCount.setText("0");
+		sbmList = new ArrayList<>();
+		adapterSbm = new SbhAdapter(mContext, sbmList);
+		lvSbm.setAdapter(adapterSbm);
 	}
 
 
@@ -285,7 +318,7 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 		}
 	}
 
-	class RkDhBackListener implements HttpJsonRequest.CallbackListener {
+	private class RkDhBackListener implements HttpJsonRequest.CallbackListener {
 
 		@Override
 		public void callBack(String result) {
@@ -360,13 +393,7 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 			datas.addAll(bean.getRows());
 			// 如果只有一条记录，不需再选择，直接带入
 			if (currentPage == 1 && bean.getRows().size() == 1) {
-				edSph.setText(datas.get(0).get编号().trim());
-				edSpm.setText(datas.get(0).get商品名称().trim());
-				dw = datas.get(0).get单位();
-				edSph.setEnabled(false);
-				edSpm.setEnabled(false);
-				setRightBtnListener(getResources().getString(R.string.repertory_query), null);
-				ibScanner.setOnClickListener(null);
+				selectSp(0);
 				return;
 			}
 
@@ -390,6 +417,49 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 				listView.setPullLoadEnable((currentPage <= pageCount));
 			}
 		}
+	}
+
+	/**
+	 * 选择商品
+	 *
+	 * @param index 选择
+	 */
+	private void selectSp(int index) {
+		edSph.setText(datas.get(index).get编号().trim());
+		edSpm.setText(datas.get(index).get商品名称().trim());
+		dw = datas.get(index).get单位();
+		edSph.setEnabled(false);
+		edSpm.setEnabled(false);
+		setRightBtnListener(getResources().getString(R.string.repertory_query), null);
+		ibScanner.setOnClickListener(null);
+
+		// 列表中是否存在此商品
+		boolean spFlag = false;
+		/*
+		 * 选中商品
+		 */
+		for (InSbmBean bean : sbmBeanList) {
+			// 如果商品已经存在
+			if (datas.get(index).get编号().trim().equals(bean.getSph())) {
+				spFlag = true;
+				sbmList = bean.getSbmList();
+				break;
+			}
+		}
+		/*
+		如果商品不存在，添加到商品列表
+		 */
+		if (!spFlag) {
+			InSbmBean bean = new InSbmBean();
+			bean.setSph(datas.get(index).get编号().trim());
+			bean.setSpm(datas.get(index).get商品名称().trim());
+			bean.setDw(datas.get(index).get单位().trim());
+			sbmBeanList.add(bean);
+			sbmList = bean.getSbmList();
+		}
+		adapterSbm = new SbhAdapter(mContext, sbmList);
+		lvSbm.setAdapter(adapterSbm);
+
 	}
 
 	@Override
@@ -427,9 +497,9 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 					if (TextUtils.isEmpty(sbm)) {
 						tvSbm.setText(barCode);
 //						sbmList.add(barCode);
-						sbmList.add(0,barCode);
+						sbmList.add(0, barCode);
 						adapterSbm.notifyDataSetChanged();
-						tvCount.setText(""+sbmList.size());
+						tvCount.setText("" + sbmList.size());
 
 					} else {
 						if (sbmList.contains(barCode)) {
@@ -438,9 +508,9 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 							tvSbm.append("\n" + barCode);
 							try {
 //								sbmList.add(barCode);
-								sbmList.add(0,barCode);
+								sbmList.add(0, barCode);
 								adapterSbm.notifyDataSetChanged();
-								tvCount.setText(""+sbmList.size());
+								tvCount.setText("" + sbmList.size());
 							} catch (NumberFormatException e) {
 								tvCount.setText("1");
 							}
@@ -478,13 +548,7 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				int p = (int) id;
-				edSph.setText(datas.get(p).get编号().trim());
-				edSpm.setText(datas.get(p).get商品名称().trim());
-				dw = datas.get(p).get单位();
-				edSph.setEnabled(false);
-				edSpm.setEnabled(false);
-				setRightBtnListener(getResources().getString(R.string.repertory_query), null);
-				ibScanner.setOnClickListener(null);
+				selectSp(p);
 				dialog.cancel();
 			}
 		});
@@ -537,13 +601,9 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 
 
 	/**
-	 * 获得出库信息
-	 * fhr 发货人
-	 * page 页数
-	 * pageSize 每页大小
-	 * reType 数据返回类型 json/xml
+	 * 出库
 	 */
-	private void ck_get_ckinfo() {
+	private void rk_rk() {
 
 		JSONObject jp_sub = new JSONObject();
 		try {
@@ -559,11 +619,8 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 			jp_sub.put("制单人", UserInfo.RY_NAME);
 			jp_sub.put("单位", dw.trim());
 			JSONArray jp_sub_a = new JSONArray();
-//			String sbm = tvSbm.getText().toString();
-//			if (TextUtils.isEmpty(sbm)) {
-//				makeShortToase("请扫描唯一识别码");
-//				return;
-//			}
+
+
 			for (String s : sbmList) {
 				jp_sub_a.put(s);
 			}
@@ -573,6 +630,49 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 			showLoadDialog();
 			HttpJsonRequest request = new HttpJsonRequest(new CkBackListener(),
 					Method.SERVICE_NAME_RK, Method.RK_RK, json);
+			ThreadPoolUtils.execute(request);
+		} catch (JSONException e) {
+			cancleLoadDialog();
+		}
+	}
+
+	/**
+	 * 出库V2 一个单号，多个商品
+	 */
+	private void rk_rk_v2() {
+
+		JSONObject jp_sub = new JSONObject();
+		try {
+			String sjhm = tvDh.getText().toString();
+			if (getDh.equals(sjhm)) {
+				makeShortToase("请获取单号");
+				return;
+			}
+			jp_sub.put("单据号码", sjhm);
+			jp_sub.put("入库地点", tvCk.getText().toString());
+			jp_sub.put("制单人", UserInfo.RY_NAME);
+
+			JSONArray jsp_arr = new JSONArray();
+			for (InSbmBean bean : sbmBeanList) {
+				// 识别码数量为0，不上传
+				if (bean.getSbmList().size() > 0) {
+					JSONObject jsp = new JSONObject();
+					jsp.put("编号", bean.getSph());
+					jsp.put("商品名称", bean.getSpm());
+					jsp.put("单位", bean.getDw());
+					JSONArray jp_sub_a = new JSONArray();
+					for (String string : bean.getSbmList()) {
+						jp_sub_a.put(string);
+					}
+					jsp.put("批次号", jp_sub_a);
+					jsp_arr.put(jsp);
+				}
+			}
+			jp_sub.put("入库数据", jsp_arr);
+			String json = jp_sub.toString();
+			showLoadDialog();
+			HttpJsonRequest request = new HttpJsonRequest(new CkBackListener(),
+					Method.SERVICE_NAME_RK, Method.RK_RK_V2, json);
 			ThreadPoolUtils.execute(request);
 		} catch (JSONException e) {
 			cancleLoadDialog();
@@ -615,6 +715,7 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 				tvCount.setText("");
 				tvSbm.setText("");
 				sbmList.clear();
+				sbmBeanList.clear();
 				adapterSbm.notifyDataSetChanged();
 				ibScanner.setOnClickListener(InActivity.this);
 			}
