@@ -32,6 +32,7 @@ public class OffineActivity extends BaseActivity implements View.OnClickListener
 	}
 
 	private Button btnPd, btnCk, btnPdUp, btnCkUp, btnUpdateSp;
+	private Button btnRk, btnRkUp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,23 +59,31 @@ public class OffineActivity extends BaseActivity implements View.OnClickListener
 		btnPdUp = findView(R.id.offline_btn_pd_up);
 		btnCkUp = findView(R.id.offline_btn_ck_pu);
 		btnUpdateSp = findView(R.id.offline_btn_update_sp);
+		btnRk = findView(R.id.offline_btn_rk);
+		btnRkUp = findView(R.id.offline_btn_rk_up);
 
 		btnPd.setOnClickListener(this);
 		btnCk.setOnClickListener(this);
 		btnPdUp.setOnClickListener(this);
 		btnCkUp.setOnClickListener(this);
 		btnUpdateSp.setOnClickListener(this);
+		btnRk.setOnClickListener(this);
+		btnRkUp.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
 		if (v == btnPd) {
-			PdOfflineActivity.startPdOfflineActivity(mContext);
-		} else if (v == btnCk) {
-			makeShortToase("功能开发中");
+			OfflinePdActivity.startPdOfflineActivity(mContext);
 		} else if (v == btnPdUp) {
-			PdOffineListActivity.startPdOfflineListActivity(mContext);
-		} else if (v == btnCkUp) {
+			OffinePdListActivity.startPdOfflineListActivity(mContext);
+		} else if (v == btnRk) {
+			OfflineInActivity.startInOfflineActivity(mContext);
+		} else if (v == btnRkUp) {
+			OfflineInListActivity.startInOfflineListActivity(mContext);
+		}  else if (v == btnCk) {
+			makeShortToase("功能开发中");
+		}else if (v == btnCkUp) {
 			makeShortToase("功能开发中");
 		} else if (v == btnUpdateSp) {
 			pd_lx_splb();
@@ -92,7 +101,6 @@ public class OffineActivity extends BaseActivity implements View.OnClickListener
 
 		@Override
 		public void callBack(String result) {
-			cancleLoadDialog();
 			L.e(result);
 			if (TextUtils.isEmpty(result)) {
 				makeShortToase(R.string.loading_error);
@@ -103,6 +111,7 @@ public class OffineActivity extends BaseActivity implements View.OnClickListener
 				makeShortToase(R.string.loading_empty);
 				return;
 			}
+			cancleLoadDialog();
 
 			L.e("数量：" + spBean.getRows().size());
 

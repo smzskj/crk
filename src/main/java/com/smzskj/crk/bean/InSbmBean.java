@@ -28,7 +28,6 @@ public class InSbmBean {
 	 */
 	private List<String> sbmList = new ArrayList<>();
 
-
 	public String getSph() {
 		return sph;
 	}

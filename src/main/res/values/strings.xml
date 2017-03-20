@@ -17,6 +17,7 @@
     <string name="upload">上传</string>
 
     <string name="scanner_error">扫描号码不合法</string>
+    <string name="kf_error">库房选择错误</string>
 
 
     <string name="login">登录</string>
@@ -46,8 +47,10 @@
     <string name="offline">离线操作</string>
     <string name="offline_pd">离线盘点</string>
     <string name="offline_ck">离线出库</string>
+    <string name="offline_rk">离线入库</string>
     <string name="offline_pd_up">盘点上传</string>
     <string name="offline_ck_up">出库上传</string>
+    <string name="offline_rk_up">入库上传</string>
     <string name="offline_update_sp">更新商品</string>
 
     <string name="pds_int">盘点数:%d</string>

@@ -125,7 +125,8 @@ public class SelectRepertoryActivity extends BaseActivity implements View.OnClic
 		if (v == btnIn) {
 			InActivity.startInActivity(mContext, code, name);
 		} else if (v == btnOut) {
-			OutActivity.startOutActivity(mContext, code, name);
+//			OutActivity.startOutActivity(mContext, code, name);
+			OutV2Activity.startOutActivity(mContext);
 		} else if (v == btnCheck) {
 			pd_chk_info();
 		} else if (v == btnQuery) {

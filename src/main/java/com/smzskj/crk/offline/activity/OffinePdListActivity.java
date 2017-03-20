@@ -26,7 +26,7 @@ import java.util.List;
  * 离线盘点列表
  */
 
-public class PdOffineListActivity extends BaseActivity implements View.OnClickListener, XListView
+public class OffinePdListActivity extends BaseActivity implements View.OnClickListener, XListView
 		.IXListViewListener {
 
 
@@ -34,7 +34,7 @@ public class PdOffineListActivity extends BaseActivity implements View.OnClickLi
 	private String db_dm;
 
 	public static void startPdOfflineListActivity(Activity context) {
-		context.startActivity(new Intent(context, PdOffineListActivity.class));
+		context.startActivity(new Intent(context, OffinePdListActivity.class));
 	}
 
 	private Button btnRqq, btnRq, btnQuery;
@@ -49,7 +49,7 @@ public class PdOffineListActivity extends BaseActivity implements View.OnClickLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pdoffline_list);
+		setContentView(R.layout.activity_offline_pd_list);
 		pdDBUtils = new PdDBUtils(mContext);
 		initView();
 	}
@@ -72,7 +72,7 @@ public class PdOffineListActivity extends BaseActivity implements View.OnClickLi
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				int p = (int) id;
-				PdOfflineUpActivity.startPdOfflineUpActivity(mContext, dates.get(p).getCount(),
+				OfflinePdUpActivity.startPdOfflineUpActivity(mContext, dates.get(p).getCount(),
 						dates.get(p).getUpCount(), dates.get(p).getRq());
 			}
 		});

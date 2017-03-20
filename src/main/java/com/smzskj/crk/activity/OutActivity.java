@@ -360,7 +360,7 @@ public class OutActivity extends BaseActivity implements View.OnClickListener {
 			String skfmc = bean.getRows().get(0).get库房名称();
 			// 库房
 			if (!skfmc.contains(lkfmc)) {
-				makeShortToase("库房选择错误");
+				makeShortToase(R.string.kf_error);
 				clean();
 				return;
 			}

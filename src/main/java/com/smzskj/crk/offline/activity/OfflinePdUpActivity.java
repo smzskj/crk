@@ -41,7 +41,7 @@ import java.util.List;
  * 离线盘点上传
  */
 
-public class PdOfflineUpActivity extends BaseActivity {
+public class OfflinePdUpActivity extends BaseActivity {
 
 	private List<OfflineBean> datas = new ArrayList<>();
 	private TextView tvScs;
@@ -50,7 +50,7 @@ public class PdOfflineUpActivity extends BaseActivity {
 	private String db_dm;
 
 	public static void startPdOfflineUpActivity(Activity activity, int pds, int scs, String rq) {
-		Intent intent = new Intent(activity, PdOfflineUpActivity.class);
+		Intent intent = new Intent(activity, OfflinePdUpActivity.class);
 		intent.putExtra("rq", rq);
 		activity.startActivity(intent);
 	}
@@ -66,7 +66,7 @@ public class PdOfflineUpActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pdofflineup);
+		setContentView(R.layout.activity_offline_pdup);
 		addBackListener();
 		setTitle("离线盘点上传");
 
@@ -102,7 +102,7 @@ public class PdOfflineUpActivity extends BaseActivity {
 		rq = intent.getStringExtra("rq");
 
 		LayoutInflater inflater = LayoutInflater.from(mContext);
-		View view = inflater.inflate(R.layout.item_pdoffline, null, false);
+		View view = inflater.inflate(R.layout.item_offline_pd, null, false);
 
 		TextView tvSjk = findView(view, R.id.item_pfoffline_tv_sjk);
 		TextView tvKf = findView(view, R.id.item_pfoffline_tv_kf);
@@ -141,6 +141,9 @@ public class PdOfflineUpActivity extends BaseActivity {
 										   long
 												   id) {
 				final int p = (int) id;
+				if (p < 0) {
+					return false;
+				}
 				showAlertDialog("删除", "是否要删除" + datas.get(p).getPch() + "?", new DialogInterface
 						.OnClickListener() {
 

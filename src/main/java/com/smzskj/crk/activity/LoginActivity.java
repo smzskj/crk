@@ -221,13 +221,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 	@Override
 	public void onBackPressed() {
-		if (System.currentTimeMillis() - time > SHOW_TIME_MIN) {
-			time = System.currentTimeMillis();
-			makeShortToase("再按一次退出应用");
-		} else {
-			mApplication.exit();
-			System.exit(0);
-		}
+		showAlertDialog("是否退出程序", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				System.exit(0);
+			}
+		});
 	}
 
 

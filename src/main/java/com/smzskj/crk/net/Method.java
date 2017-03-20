@@ -38,6 +38,8 @@ public class Method {
 	public static String RK_RK = "rk_rk";
 	/** 入库V2 */
 	public static String RK_RK_V2 = "rk_rk_v2";
+	/** 离线入库，上传入库 */
+	public static String RK_RK_LX = "rk_rk_lx";
 
 	/** webservice 出库 */
 	public static String SERVICE_NAME_CK = "ckBean";
@@ -49,6 +51,18 @@ public class Method {
 	public static String CK_CHK_PCH = "ck_chk_pch";
 	/** 出库 */
 	public static String CK_CK = "ck_ck";
+
+	/** 获得出库信息V2 */
+	public static String CK_GET_DHINFO_V2 = "ck_get_dhinfo_v2";
+	/** 出库 批次号查询 退货 V2 */
+	public static String CK_CHK_PCH_TH_V2 = "ck_chk_pch_th_v2";
+	/** 出库 批次号查询 正常 V2 */
+	public static String CK_CHK_PCH_ZC_V2 = "ck_chk_pch_zc_v2";
+	/** 出库 v2 */
+	public static String CK_CK_V2 = "ck_ck_v2";
+
+
+
 
 
 	/** webservice 盘点 */

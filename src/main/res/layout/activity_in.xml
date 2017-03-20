@@ -252,6 +252,7 @@
                     android:digits="@string/code_number"
                     android:inputType="number"
                     android:padding="10dp"
+                    android:textColor="@color/black"
                     android:singleLine="true"
                     android:textSize="@dimen/textSize" />
 
@@ -272,6 +273,7 @@
                     android:id="@+id/in_ed_spm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:background="@drawable/bg_ed_shape"
                     android:padding="10dp"
                     android:singleLine="true"

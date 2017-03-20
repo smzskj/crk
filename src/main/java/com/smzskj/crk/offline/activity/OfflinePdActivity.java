@@ -1,7 +1,6 @@
 package com.smzskj.crk.offline.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -11,7 +10,6 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -24,13 +22,11 @@ import android.widget.TextView;
 import com.smzskj.crk.R;
 import com.smzskj.crk.adapter.SingerTvAdapter;
 import com.smzskj.crk.base.BaseActivity;
-import com.smzskj.crk.base.BaseViewAdapter;
-import com.smzskj.crk.base.BaseViewHolder;
+import com.smzskj.crk.offline.adapter.SpAdapter;
 import com.smzskj.crk.offline.bean.OfflineSpBean;
 import com.smzskj.crk.offline.db.PdDBUtils;
 import com.smzskj.crk.offline.db.SpDbUtils;
 import com.smzskj.crk.utils.Constants;
-import com.smzskj.crk.utils.L;
 import com.smzskj.crk.utils.ScannerUtils;
 import com.smzskj.crk.utils.UserInfo;
 import com.smzskj.crk.view.xlistview.XListView;
@@ -48,11 +44,11 @@ import java.util.Locale;
  * 离线盘点
  */
 
-public class PdOfflineActivity extends BaseActivity implements View.OnClickListener {
+public class OfflinePdActivity extends BaseActivity implements View.OnClickListener {
 
 
 	public static void startPdOfflineActivity(Activity context) {
-		context.startActivity(new Intent(context, PdOfflineActivity.class));
+		context.startActivity(new Intent(context, OfflinePdActivity.class));
 	}
 
 	private TextView tvRq, tvDb, tvKf, tvRy, tvPds,tvSpm;
@@ -74,7 +70,7 @@ public class PdOfflineActivity extends BaseActivity implements View.OnClickListe
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_pd_offline);
+		setContentView(R.layout.activity_offline_pd);
 		addBackListener();
 		setTitle(R.string.offline_pd);
 		spDbUtils = new SpDbUtils(mContext);
@@ -347,32 +343,4 @@ public class PdOfflineActivity extends BaseActivity implements View.OnClickListe
 			spListView.stopLoadMore();
 		}
 	}
-
-	class SpAdapter extends BaseViewAdapter<OfflineSpBean.RowsBean> {
-
-		public SpAdapter(Context context, List<OfflineSpBean.RowsBean> list) {
-			super(context, list);
-			L.e("list.size" + list.size());
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			L.e("list.size" + list.size());
-			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.item_sp, parent, false);
-			}
-			TextView tvSph = BaseViewHolder.get(convertView, R.id.sp_item_sph);
-			TextView tvSpm = BaseViewHolder.get(convertView, R.id.sp_item_spm);
-			TextView tvDw = BaseViewHolder.get(convertView, R.id.sp_item_dw);
-
-			OfflineSpBean.RowsBean bean = list.get(position);
-			tvSph.setText("编号:" + bean.get编号());
-			tvSpm.setText("商品名称:" + bean.get商品名称());
-			tvDw.setText("单位:" + bean.get单位());
-
-			return convertView;
-		}
-	}
-
-
 }

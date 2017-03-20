@@ -59,6 +59,13 @@
 
         </activity>
 
+        <!--出库v2-->
+        <activity
+            android:name=".activity.OutV2Activity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
         <!--扫描-->
         <activity
             android:name=".activity.ScannerActivity"
@@ -116,7 +123,7 @@
 
         <!--离线盘点-->
         <activity
-            android:name="com.smzskj.crk.offline.activity.PdOfflineActivity"
+            android:name="com.smzskj.crk.offline.activity.OfflinePdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
 
@@ -124,7 +131,7 @@
 
         <!--离线盘点查询-->
         <activity
-            android:name="com.smzskj.crk.offline.activity.PdOffineListActivity"
+            android:name="com.smzskj.crk.offline.activity.OffinePdListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
 
@@ -132,7 +139,31 @@
 
         <!--离线盘点上传-->
         <activity
-            android:name="com.smzskj.crk.offline.activity.PdOfflineUpActivity"
+            android:name="com.smzskj.crk.offline.activity.OfflinePdUpActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
+
+        <!--离线入库-->
+        <activity
+            android:name="com.smzskj.crk.offline.activity.OfflineInActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
+
+        <!--离线入库列表-->
+        <activity
+            android:name="com.smzskj.crk.offline.activity.OfflineInListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
+
+        <!--离线上传列表-->
+        <activity
+            android:name="com.smzskj.crk.offline.activity.OfflineInUpActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
 

@@ -69,13 +69,15 @@ public class SpDbUtils {
 		Cursor cursor = db.rawQuery("SELECT * FROM lxsp WHERE bh || txm like '%" +
 				bh + "%' ORDER BY bh limit 10 offset ? ",new String[]{page * 10 + ""});
 		L.e("商品数量：" + cursor.getCount());
-		while (cursor.moveToNext()) {
-			OfflineSpBean.RowsBean rowsBean = new OfflineSpBean.RowsBean();
-			rowsBean.set单位(cursor.getString(cursor.getColumnIndex("dw")));
-			rowsBean.set商品名称(cursor.getString(cursor.getColumnIndex("spmc")));
-			rowsBean.set条形码(cursor.getString(cursor.getColumnIndex("txm")));
-			rowsBean.set编号(cursor.getString(cursor.getColumnIndex("bh")));
-			list.add(rowsBean);
+		if (cursor.getCount() > 0) {
+			while (cursor.moveToNext()) {
+				OfflineSpBean.RowsBean rowsBean = new OfflineSpBean.RowsBean();
+				rowsBean.set单位(cursor.getString(cursor.getColumnIndex("dw")));
+				rowsBean.set商品名称(cursor.getString(cursor.getColumnIndex("spmc")));
+				rowsBean.set条形码(cursor.getString(cursor.getColumnIndex("txm")));
+				rowsBean.set编号(cursor.getString(cursor.getColumnIndex("bh")));
+				list.add(rowsBean);
+			}
 		}
 		cursor.close();
 		db.close();

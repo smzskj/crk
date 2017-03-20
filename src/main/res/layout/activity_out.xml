@@ -5,8 +5,8 @@
 
     <include
         android:id="@+id/title"
-        android:visibility="gone"
-        layout="@layout/include_topbar" />
+        layout="@layout/include_topbar"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/title2"
@@ -26,19 +26,19 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_rk2" />
+                android:src="@drawable/ic_rk2"/>
 
             <TextView
                 style="@style/textStyle"
                 android:layout_marginLeft="10dp"
-                android:text="@string/repertory_dz" />
+                android:text="@string/repertory_dz"/>
 
         </LinearLayout>
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/colorDivider" />
+            android:background="@color/colorDivider"/>
 
         <LinearLayout
             android:id="@+id/out_ll_qx"
@@ -51,12 +51,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_qx" />
+                android:src="@drawable/ic_qx"/>
 
             <TextView
                 style="@style/textStyle"
                 android:layout_marginLeft="10dp"
-                android:text="@string/cancle" />
+                android:text="@string/cancle"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:layout_below="@id/title2"
-        android:background="@color/colorDivider" />
+        android:background="@color/colorDivider"/>
 
     <com.smzskj.crk.view.xlistview.XListView
         android:id="@+id/out_listview"
@@ -86,13 +86,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
         android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/colorDivider" />
+            android:background="@color/colorDivider"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -107,25 +106,25 @@
                 android:layout_marginRight="@dimen/act_padding"
                 android:background="@null"
                 android:padding="5dp"
-                android:src="@drawable/ic_sm" />
+                android:src="@drawable/ic_sm"/>
 
             <EditText
                 android:id="@+id/out_ed_bzm"
                 style="@style/textStyle"
+                android:layout_width="match_parent"
                 android:layout_centerInParent="true"
                 android:background="@null"
                 android:gravity="center"
-                android:layout_width="match_parent"
                 android:hint="请输入批次码"
                 android:inputType="number"
-                android:singleLine="true" />
+                android:singleLine="true"/>
 
         </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/colorDivider" />
+            android:background="@color/colorDivider"/>
 
         <LinearLayout
             android:id="@+id/out_ll_qrjx"
@@ -137,12 +136,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_qrbjx" />
+                android:src="@drawable/ic_qrbjx"/>
 
             <TextView
                 style="@style/textStyle"
                 android:layout_marginLeft="10dp"
-                android:text="确认并继续" />
+                android:text="确认并继续"/>
 
         </LinearLayout>
 

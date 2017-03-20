@@ -24,7 +24,7 @@ public class PdOfflineUpAdapter extends BaseViewAdapter<OfflineBean> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.item_pdofflineup, parent, false);
+			convertView = inflater.inflate(R.layout.item_offline_pdup, parent, false);
 		}
 
 		TextView tvKf = (TextView) convertView.findViewById(R.id.item_pdofflineup_kf);

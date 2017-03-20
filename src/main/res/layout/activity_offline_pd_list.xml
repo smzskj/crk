@@ -4,6 +4,9 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <!--离线盘点上传列表 OffinePdListActivity-->
+    <!--离线入库上传列表 OfflineInListActivity-->
+
     <include layout="@layout/include_topbar" />
 
     <RelativeLayout
@@ -45,7 +48,7 @@
 
     </RelativeLayout>
 
-    <!--<include layout="@layout/item_pdoffline" />-->
+    <!--<include layout="@layout/item_offline_pd" />-->
 
     <com.smzskj.crk.view.xlistview.XListView
         android:id="@+id/pdoffline_lv"

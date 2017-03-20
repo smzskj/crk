@@ -30,6 +30,7 @@ import com.smzskj.crk.bean.InSpBean;
 import com.smzskj.crk.bean.RkDhBean;
 import com.smzskj.crk.net.HttpJsonRequest;
 import com.smzskj.crk.net.Method;
+import com.smzskj.crk.offline.adapter.SbhAdapter;
 import com.smzskj.crk.utils.Constants;
 import com.smzskj.crk.utils.JsonUtils;
 import com.smzskj.crk.utils.L;
@@ -356,6 +357,11 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 		String spm = edSpm.getText().toString();
 		String pageStr = "" + currentPage;
 
+		L.e("sph" + sph + "spm" + spm);
+		if (currentPage == 1) {
+			datas.clear();
+		}
+
 		HttpJsonRequest request = new HttpJsonRequest(new SpInfoBackListener(),
 				Method.SERVICE_NAME_RK, Method.RK_GET_SPINFO, sph, spm, "", pageStr, pageSize);
 		ThreadPoolUtils.execute(request);
@@ -477,8 +483,8 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 			public void onSuccess(String barCode) {
 				player.start();
 				barCode = barCode.trim();
+				L.e("barCode" + barCode);
 				if (edSph.isEnabled()) {
-					player.start();
 					edSph.setText(barCode);
 					if (scannerSph != null) {
 						scannerSph.cloase();
@@ -509,6 +515,7 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 
 	/**
 	 * 添加商品号
+	 *
 	 * @param barCode 商品号
 	 */
 	private void addSbm(String barCode) {
@@ -699,50 +706,36 @@ public class InActivity extends BaseActivity implements View.OnClickListener, Vi
 				makeShortToase(R.string.loading_error);
 				return;
 			}
-
-			if ("true".equals(bean.getRes())) {
-				rk_get_dh();
-				edSph.setText("");
-				edSph.setEnabled(true);
-				setRightBtnListener(getResources().getString(R.string.repertory_query), new View
-						.OnClickListener() {
-
-
-					@Override
-					public void onClick(View v) {
-						rk_get_spinfo();
-					}
-				});
-
-				edSbm.setText("");
-				edSpm.setText("");
-				edSpm.setEnabled(true);
-				tvCount.setText("");
-				tvSbm.setText("");
-				sbmList.clear();
-				sbmBeanList.clear();
-				adapterSbm.notifyDataSetChanged();
-				ibScanner.setOnClickListener(InActivity.this);
-			}
 			makeShortToase(bean.getReason());
-		}
-	}
+			if ("true".equals(bean.getRes())) {
 
+				finish();
 
-	class SbhAdapter extends BaseViewAdapter<String> {
-
-		public SbhAdapter(Context context, List<String> list) {
-			super(context, list);
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.item_tv, parent, false);
+//				rk_get_dh();
+//				edSph.setText("");
+//				edSph.setEnabled(true);
+//				setRightBtnListener(getResources().getString(R.string.repertory_query), new View
+//						.OnClickListener() {
+//
+//
+//					@Override
+//					public void onClick(View v) {
+//						rk_get_spinfo();
+//					}
+//				});
+//
+//				edSbm.setText("");
+//				edSpm.setText("");
+//				edSpm.setEnabled(true);
+//				tvCount.setText("");
+//				tvSbm.setText("");
+//				sbmList.clear();
+//				sbmBeanList.clear();
+//				adapterSbm.notifyDataSetChanged();
+//				ibScanner.setOnClickListener(InActivity.this);
 			}
-			TextView textView = findView(convertView, R.id.item_tv_tv);
-			textView.setText(list.get(position));
-			return convertView;
 		}
 	}
+
+
 }

@@ -26,7 +26,7 @@ public class PdOfflineListAdapter extends BaseViewAdapter<OfflineCountListBean> 
 
 	public PdOfflineListAdapter(Context context, List<OfflineCountListBean> list, String sjk,
 								String kf, String ry) {
-		super(context, list);
+		this(context, list);
 		this.sjk = sjk;
 		this.kf = kf;
 		this.ry = ry;
@@ -37,9 +37,8 @@ public class PdOfflineListAdapter extends BaseViewAdapter<OfflineCountListBean> 
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.item_pdoffline, parent, false);
+			convertView = inflater.inflate(R.layout.item_offline_pd, parent, false);
 		}
-
 
 		TextView tvSjk = BaseViewHolder.get(convertView, R.id.item_pfoffline_tv_sjk);
 		TextView tvKf = BaseViewHolder.get(convertView, R.id.item_pfoffline_tv_kf);

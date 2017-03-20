@@ -4,6 +4,9 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <!--离线盘点上传 OfflinePdUpActivity-->
+    <!--离线入库上传 OfflineInUpActivity-->
+
     <include layout="@layout/include_topbar" />
 
     <com.smzskj.crk.view.xlistview.XListView
