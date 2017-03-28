@@ -6,8 +6,9 @@
 
     <!--离线盘点上传列表 OffinePdListActivity-->
     <!--离线入库上传列表 OfflineInListActivity-->
+    <!--离线出库上传列表 OfflineInListActivity-->
 
-    <include layout="@layout/include_topbar" />
+    <include layout="@layout/include_topbar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
             android:id="@+id/pdoffline_btn_query"
             style="@style/btnStyle"
             android:layout_alignParentRight="true"
-            android:text="@string/query" />
+            android:text="@string/query"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,20 +31,20 @@
             <Button
                 android:id="@+id/pdoffline_btn_rqq"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_ed_shape" />
+                android:layout_weight="1"
+                android:background="@drawable/bg_ed_shape"/>
 
             <TextView
                 style="@style/textStyle"
-                android:text="至" />
+                android:text="至"/>
 
             <Button
                 android:id="@+id/pdoffline_btn_rq"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_ed_shape" />
+                android:layout_weight="1"
+                android:background="@drawable/bg_ed_shape"/>
         </LinearLayout>
 
     </RelativeLayout>
@@ -54,7 +55,10 @@
         android:id="@+id/pdoffline_lv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/act_margin">
+        android:divider="@null"
+        android:dividerHeight="@dimen/act_margin"
+        android:layout_margin="@dimen/act_margin"
+        >
 
     </com.smzskj.crk.view.xlistview.XListView>
 

@@ -118,7 +118,7 @@ public class OfflineInActivity extends BaseActivity implements View.OnClickListe
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
 		tvDh.setText(simpleDateFormat.format(new Date()));
-		tvCk.setText(mSp.getString(UserInfo.SP_DB_NAME, ""));
+		tvCk.setText(mSp.getString(UserInfo.SP_CK_NAME, ""));
 
 		tvDh.setOnClickListener(this);
 		llIn.setOnClickListener(this);

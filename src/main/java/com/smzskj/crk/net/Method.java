@@ -51,6 +51,8 @@ public class Method {
 	public static String CK_CHK_PCH = "ck_chk_pch";
 	/** 出库 */
 	public static String CK_CK = "ck_ck";
+	/** 离线出库 */
+	public static String CK_CK_LX = "ck_ck_lx";
 
 	/** 获得出库信息V2 */
 	public static String CK_GET_DHINFO_V2 = "ck_get_dhinfo_v2";

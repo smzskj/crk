@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/act_padding"
+              android:paddingRight="@dimen/act_padding"
+              android:paddingTop="@dimen/act_margin">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            
+            android:layout_weight="5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/textStyle"
+                android:text="单号"/>
+
+            <EditText
+                android:id="@+id/offline_out_ed_djh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ed_shape"
+                android:padding="10dp"
+                android:hint="请输入单据号"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize"/>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/offline_out_btn_confirm"
+            style="@style/btnStyle"
+            android:layout_width="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/act_padding"
+            android:layout_weight="2"
+            android:text="@string/confirm"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_rks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/act_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/textStyle"
+            android:text="入库数:"/>
+
+        <TextView
+            android:id="@+id/offline_out_tv_count"
+            style="@style/textStyle"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/act_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/textStyle"
+            android:text="库房:"/>
+
+        <TextView
+            android:id="@+id/offline_out_tv_ck"
+            style="@style/textStyle"
+            android:text="仓库"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/act_margin"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/tv_sph"
+            style="@style/textStyle"
+            android:layout_centerVertical="true"
+            android:text="商品号"/>
+
+        <ImageButton
+            android:id="@+id/offline_out_ib_sm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/ic_sm"/>
+
+        <EditText
+            android:id="@+id/offline_out_ed_sph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/offline_out_ib_sm"
+            android:layout_toRightOf="@id/tv_sph"
+            android:background="@drawable/bg_ed_shape"
+            android:digits="@string/code_number"
+            android:inputType="number"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/act_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/textStyle"
+            android:text="商品名"/>
+
+        <TextView
+            android:id="@+id/offline_out_tv_spm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_ed_shape"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textSize"/>
+
+    </LinearLayout>
+
+    <com.smzskj.crk.view.ListViewInScroll
+        android:id="@+id/offline_out_lv_sbm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/act_margin">
+
+    </com.smzskj.crk.view.ListViewInScroll>
+
+    <EditText
+        android:id="@+id/offline_out_tv_sbm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/act_margin"
+        android:background="@drawable/bg_ed_shape"
+        android:digits="@string/code_number"
+        android:inputType="number"
+        android:minLines="4"
+        android:text=""
+        android:textSize="@dimen/textSize"
+        android:visibility="gone"/>
+
+
+</LinearLayout>

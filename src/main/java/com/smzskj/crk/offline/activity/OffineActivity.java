@@ -82,9 +82,9 @@ public class OffineActivity extends BaseActivity implements View.OnClickListener
 		} else if (v == btnRkUp) {
 			OfflineInListActivity.startInOfflineListActivity(mContext);
 		}  else if (v == btnCk) {
-			makeShortToase("功能开发中");
+			OfflineOutActivity.startOfflineOutActivity(mContext);
 		}else if (v == btnCkUp) {
-			makeShortToase("功能开发中");
+			OfflineOutListActivity.startOfflineOutListActivity(mContext);
 		} else if (v == btnUpdateSp) {
 			pd_lx_splb();
 		}

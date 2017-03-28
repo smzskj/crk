@@ -49,7 +49,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.smzskj.crk.utils.JsonUtils.getJsonParseObject;
 
@@ -70,7 +72,6 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 	private ImageButton ibSm, ibScanner;
 
 	private LayoutInflater inflater;
-
 	private ScannerUtils scanner;
 	private MediaPlayer player;
 
@@ -85,6 +86,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 	 * 出库商品数据
 	 */
 	private List<OutDhBeanPch.RowsBean> datas = new ArrayList<>();
+	private Set<String> spBhs = new HashSet<>();
 	private int dataSize = 0;
 	/**
 	 * 本地库房
@@ -237,10 +239,14 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 	}
 
 
+	/**
+	 * 修改去人数量
+	 * @param qrsl
+	 */
 	private void setQrsl(int qrsl) {
 		int sl = Integer.valueOf(tvQrsl.getText().toString());
 		sl += qrsl;
-		tvQrsl.setText(String.valueOf(sl + qrsl));
+		tvQrsl.setText(String.valueOf(sl));
 	}
 
 	private void ck_get_dhinfo() {
@@ -316,6 +322,9 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 
 			edDh.setEnabled(false);
 			datas.addAll(dhBeanPch.getRows());
+			for (OutDhBeanPch.RowsBean rowsBean : datas) {
+				spBhs.add(rowsBean.get编号());
+			}
 			dataSize = datas.size();
 			adapter.notifyDataSetChanged();
 		}
@@ -520,6 +529,11 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 		}
 	}
 
+	/**
+	 * 正常出库
+	 * @param pch
+	 * @param rowsBean
+	 */
 	private void zcck(String pch, OutZcBean.RowsBean rowsBean) {
 		boolean isck = false;
 		for (OutDhBeanPch.RowsBean bean : datas) {
@@ -534,7 +548,11 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 			}
 		}
 		if (!isck) {
-			makeShortToase("此商品已经全部出库");
+			if (!spBhs.contains(rowsBean.get编号())) {
+				makeShortToase("批次号为"+pch+"的商品在库存里是："+rowsBean.get编号() + rowsBean.get商品名称() + "不能出库！");
+			} else {
+				makeShortToase("此商品已经全部出库");
+			}
 		} else {
 			makeShortToase("确认成功");
 		}
@@ -543,7 +561,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 	private AlertDialog dialog;
 
 	/**
-	 * 商品弹窗
+	 * 查询回来多个商品的时候，选择其中一个商品
 	 */
 	private void spDialog(final String pch, final List<OutZcBean.RowsBean> list) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.ProgressDialog);
@@ -619,13 +637,13 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 					continue;
 				}
 				JSONObject jp_sub_a_obj = new JSONObject();
-				jp_sub_a_obj.put("单据号码", edDh.getText().toString());
 				jp_sub_a_obj.put("编号", rowsBean.get编号());
 				jp_sub_a_obj.put("批次号", rowsBean.get批次号());
 				jp_sub_a_obj.put("id", rowsBean.getId());
 				jp_sub_a.put(jp_sub_a_obj);
 			}
 			jp_sub.put("发货人", ry);
+			jp_sub.put("单据号码", edDh.getText().toString());
 			jp_sub.put("出库商品", jp_sub_a);
 
 		} catch (JSONException e) {
@@ -655,7 +673,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 				return;
 			}
 
-			if ("100".equals(bean.getCode())) {
+			if ("true".equals(bean.getRes())) {
 				edDh.setText("");
 				edDh.setEnabled(true);
 				datas.clear();

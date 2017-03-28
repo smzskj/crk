@@ -35,12 +35,12 @@ public class OutPchAdapter extends BaseViewAdapter<OutDhBeanPch.RowsBean> {
 		TextView tvSpmc = BaseViewHolder.get(convertView, R.id.dh_item_tv_spm);
 
 		OutDhBeanPch.RowsBean bean = list.get(position);
-		tvPch.setText("批次号:" + bean.get批次号());
-		tvBh.setText("编号:" + bean.get编号());
-		tvSpmc.setText("商品名称:" + bean.get商品名称());
+		tvPch.setText("批次号:" + bean.get批次号().trim());
+		tvBh.setText("编号:" + bean.get编号().trim());
+		tvSpmc.setText("商品名称:" + bean.get商品名称().trim());
 
 		ImageView imageView = BaseViewHolder.get(convertView, R.id.dh_item_iv);
-		if ("D".equals(bean.get登帐())) {
+		if ("D".equals(bean.get登帐().trim())) {
 			imageView.setVisibility(View.VISIBLE);
 		} else {
 			imageView.setVisibility(View.GONE);

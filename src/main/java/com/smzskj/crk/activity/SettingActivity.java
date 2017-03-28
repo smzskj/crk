@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -34,7 +33,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
 
 	private TextView tvVersion;
-	private Button btnLogout, btnPort, btnUppwd, btnIp ,btnUpdate;
+	private Button btnLogout, btnPort, btnUppwd, btnIp, btnUpdate;
 	private EditText edPort, edIp;
 
 	public static void startSettingActivity(Context context) {
@@ -137,18 +136,17 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 			L.e(result);
 			cancleLoadDialog();
 			if (!TextUtils.isEmpty(result)) {
-				UpdateBean bean = JsonUtils.getJsonParseObject(result,UpdateBean.class);
+				UpdateBean bean = JsonUtils.getJsonParseObject(result, UpdateBean.class);
 				if (bean != null && bean.getRows() != null && bean.getRows().size() > 0) {
 					try {
 						int svcode = bean.getRows().get(0).getVcode();
-						int lvcode = getPackageManager().getPackageInfo(getPackageName(),0).versionCode;
+						int lvcode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
 						final String vname = bean.getRows().get(0).getVname();
 						if (lvcode < svcode && !TextUtils.isEmpty(vname)) {
-
 							showAlertDialog("版本更新", "发现新版本，是否马上更新？", new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
-									Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" +Constants.IP + ":" + Constants.PORT + "/crk_service/downloads/" + vname));
+									Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + Constants.IP + ":" + Constants.PORT + "/crk_service/downloads/" + vname));
 									browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 									startActivity(browserIntent);
 								}
@@ -158,6 +156,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 									dialog.cancel();
 								}
 							});
+						} else {
+							showToastDialog("没有发现新版本");
 						}
 					} catch (PackageManager.NameNotFoundException e) {
 						e.printStackTrace();

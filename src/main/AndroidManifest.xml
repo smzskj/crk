@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.smzskj.crk">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -10,11 +10,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -164,6 +167,27 @@
         <!--离线上传列表-->
         <activity
             android:name="com.smzskj.crk.offline.activity.OfflineInUpActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
+        <!--离线出库-->
+        <activity
+            android:name="com.smzskj.crk.offline.activity.OfflineOutActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
+        <!--离线出库上传列表-->
+        <activity
+            android:name="com.smzskj.crk.offline.activity.OfflineOutListActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
+        <!--离线出库上传-->
+        <activity
+            android:name="com.smzskj.crk.offline.activity.OfflineOutUpActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
 
