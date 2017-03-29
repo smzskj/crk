@@ -1,6 +1,7 @@
 package com.smzskj.crk.offline.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -81,6 +82,20 @@ public class OfflineInListActivity extends BaseActivity implements View.OnClickL
 			}
 		});
 
+		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, final long id) {
+				showAlertDialog("是否删除此离线入库数据？", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						inDbUtils.deleteDh(datas.get((int) id).getDjhm());
+						onRefresh();
+					}
+				});
+				return false;
+			}
+		});
+
 		String zdr = mSp.getString(UserInfo.SP_USER_NAME, "");
 		String sjk = mSp.getString(UserInfo.SP_DB_NAME, "");
 		String rkdd = mSp.getString(UserInfo.SP_CK_NAME, "");
@@ -119,7 +134,9 @@ public class OfflineInListActivity extends BaseActivity implements View.OnClickL
 		List<OfflineInListBean> data = inDbUtils.queryInList(zdr_dm, sjk_dm, rkdd_dm, rqq, rq, page);
 		datas.addAll(data);
 		adapter.notifyDataSetChanged();
-		if (data.size() == 10) {
+		if (data.size() == 0) {
+			makeShortToase(R.string.loading_empty);
+		} else if (data.size() == 10) {
 			listView.setPullLoadEnable(true);
 		} else {
 			listView.setPullLoadEnable(false);

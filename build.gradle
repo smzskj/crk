@@ -43,15 +43,15 @@ android {
 //        variant.outputs[0].outputFile = new File(file.parent,
 //                file.name.replace(".apk", "_" +  "SuperSellerEnterprise_V${releaseTime()}" + "_"+  ".apk"))
 //    }
-//    applicationVariants.all { variant ->
-//        variant.outputs.each { output ->
-//            def outputFile = output.outputFile
-//            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-//                def fileName = "CRK_V${defaultConfig.versionName}_${releaseTime()}.apk"
-//                output.outputFile = new File(outputFile.parent, fileName)
-//            }
-//        }
-//    }
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                def fileName = "CRK_V${defaultConfig.versionName}_${releaseTime()}.apk"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
     lintOptions {
         abortOnError false
     }

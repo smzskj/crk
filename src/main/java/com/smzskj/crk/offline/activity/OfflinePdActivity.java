@@ -221,7 +221,7 @@ public class OfflinePdActivity extends BaseActivity implements View.OnClickListe
 		scanner.scanner();
 	}
 
-	private void addDb(String sph, String pch) {
+	private void addDb(String sph, String pch)  {
 		Date date = new Date();
 		long id = pdDBUtils.insert(sph, pch, simpleDateFormatRq.format(date), simpleDateFormat
 				.format(date));

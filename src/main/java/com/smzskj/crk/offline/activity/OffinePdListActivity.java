@@ -1,6 +1,7 @@
 package com.smzskj.crk.offline.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,7 +23,7 @@ import java.util.List;
 
 /**
  * Created by ztt on 2017/2/25.
- *
+ * <p>
  * 离线盘点列表
  */
 
@@ -89,6 +90,22 @@ public class OffinePdListActivity extends BaseActivity implements View.OnClickLi
 		btnRqq.setOnClickListener(this);
 		btnQuery.setOnClickListener(this);
 		onClick(btnQuery);
+
+
+		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, final long id) {
+
+				showAlertDialog("是否删除此离线盘点数据？", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						pdDBUtils.deleteDjh(ry_dm, db_dm, dates.get((int) id).getRq());
+						onRefresh();
+					}
+				});
+				return false;
+			}
+		});
 	}
 
 	@Override

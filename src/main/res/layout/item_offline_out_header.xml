@@ -62,7 +62,7 @@
 
         <TextView
             style="@style/textStyle"
-            android:text="入库数:"/>
+            android:text="出库数:"/>
 
         <TextView
             android:id="@+id/offline_out_tv_count"

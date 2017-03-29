@@ -230,10 +230,26 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 		if (pch.length() < 8) {
 			makeShortToase(R.string.scanner_error);
 		} else {
-			if (isReturn) {
-				ck_chk_pch_th_v2(pch);
+
+			// 2017-03-28 批次号不能重复登账 （退货不检查库房）
+			// 批次号是否已经登账
+			boolean pchdz = false;
+			for (OutDhBeanPch.RowsBean bean : datas) {
+				if (bean.getD登账() && pch.equals(bean.get批次号())) {
+					pchdz = true;
+					break;
+				}
+			}
+
+			// 如果已经登账，提示不能重复登账
+			if (pchdz) {
+				makeShortToase("此批次号已经登账，不能重复登账");
 			} else {
-				ck_chk_pch_zc_v2(pch);
+				if (isReturn) {
+					ck_chk_pch_th_v2(pch);
+				} else {
+					ck_chk_pch_zc_v2(pch);
+				}
 			}
 		}
 	}
@@ -241,6 +257,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 
 	/**
 	 * 修改去人数量
+	 *
 	 * @param qrsl
 	 */
 	private void setQrsl(int qrsl) {
@@ -295,25 +312,37 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 			}
 
 			tvQrsl.setText("0");
-			// 循环批次号信息，检查仓库名称，服务器包含本地才可以入库
-			for (OutDhBeanPch.RowsBean beanPch : dhBeanPch.getRows()) {
-				if (beanPch.get库房名称() == null || !beanPch.get库房名称().contains(lkfmc)) {
-					makeShortToase(R.string.kf_error);
-					tvQrsl.setText("0");
-					return;
-				}
-				if (beanPch.getD登账()) {
-					setQrsl(beanPch.get出库数());
-				}
-			}
 
+
+			// 2017-03-28 退货不检查库房，正常出库检查库房
 			// 数据为double类型的字符串，去掉小数点，小于0是退货
 			try {
 				double djslDouble = Double.valueOf(djsl);
 				if (djslDouble < 0) {
 					isReturn = true;
+
+					// 循环批次号信息，检查仓库名称，服务器包含本地才可以入库
+					for (OutDhBeanPch.RowsBean beanPch : dhBeanPch.getRows()) {
+						if (beanPch.getD登账()) {
+							setQrsl(beanPch.get出库数());
+						}
+					}
+
 				} else {
 					isReturn = false;
+
+					// 循环批次号信息，检查仓库名称，服务器包含本地才可以入库
+					for (OutDhBeanPch.RowsBean beanPch : dhBeanPch.getRows()) {
+						if (beanPch.get库房名称() == null || !beanPch.get库房名称().contains(lkfmc)) {
+							makeShortToase(R.string.kf_error);
+							tvQrsl.setText("0");
+							return;
+						}
+						if (beanPch.getD登账()) {
+							setQrsl(beanPch.get出库数());
+						}
+					}
+
 				}
 				tvSpsl.setText("商品数量" + (long) djslDouble);
 			} catch (NumberFormatException e) {
@@ -531,6 +560,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 
 	/**
 	 * 正常出库
+	 *
 	 * @param pch
 	 * @param rowsBean
 	 */
@@ -549,7 +579,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 		}
 		if (!isck) {
 			if (!spBhs.contains(rowsBean.get编号())) {
-				makeShortToase("批次号为"+pch+"的商品在库存里是："+rowsBean.get编号() + rowsBean.get商品名称() + "不能出库！");
+				makeShortToase("批次号为" + pch + "的商品在库存里是：" + rowsBean.get编号() + rowsBean.get商品名称() + "不能出库！");
 			} else {
 				makeShortToase("此商品已经全部出库");
 			}

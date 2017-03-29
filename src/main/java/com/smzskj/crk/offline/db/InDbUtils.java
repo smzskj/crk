@@ -221,9 +221,25 @@ public class InDbUtils {
 	}
 
 
+	/**
+	 * 删除单据号码下面的批次号
+	 * @param djhm 单据号码
+	 * @param pch 批次号
+	 */
 	public void deleteDjhmPch(String djhm, String pch) {
 		SQLiteDatabase database = mHelper.getWritableDatabase();
 		database.delete(OfflinePdHelper.TABLE_NAME_LXRK, "djhm = ? and pch = ?", new String[]{djhm, pch});
+		database.close();
+	}
+
+	/**
+	 * 删除单据号码下面的所有数据
+	 *
+	 * @param djhm 删除单据号码
+	 */
+	public void deleteDh(String djhm) {
+		SQLiteDatabase database = mHelper.getWritableDatabase();
+		database.delete(OfflinePdHelper.TABLE_NAME_LXRK, "djhm = ?", new String[]{djhm});
 		database.close();
 	}
 }

@@ -1,6 +1,7 @@
 package com.smzskj.crk.offline.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,9 +11,7 @@ import android.widget.Button;
 
 import com.smzskj.crk.R;
 import com.smzskj.crk.base.BaseActivity;
-import com.smzskj.crk.offline.adapter.OfflineInListAdapter;
 import com.smzskj.crk.offline.adapter.OfflineOutListAdapter;
-import com.smzskj.crk.offline.bean.OfflineInListBean;
 import com.smzskj.crk.offline.bean.OfflineOutListBean;
 import com.smzskj.crk.offline.db.OutDbUtils;
 import com.smzskj.crk.utils.UserInfo;
@@ -23,7 +22,7 @@ import java.util.List;
 
 /**
  * Created by ztt on 2017/3/20.
- *
+ * <p>
  * 出库列表
  */
 
@@ -79,7 +78,22 @@ public class OfflineOutListActivity extends BaseActivity implements View.OnClick
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				int p = (int) id;
 				OfflineOutUpActivity.startOfflineOutUpActivity(mContext, datas.get(p).getDjhm(), datas.get(p).getZt()
-						, datas.get(p).getRq(), "" + datas.get(p).getCount(),datas.get(p).getSj());
+						, datas.get(p).getRq(), "" + datas.get(p).getCount(), datas.get(p).getSj());
+			}
+		});
+
+		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				final int p = (int) id;
+				showAlertDialog("是否要删除此离线出库数据？", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						outDbUtils.deleteDjhmPch(datas.get(p).getDjhm(), datas.get(p).getSj());
+						onRefresh();
+					}
+				});
+				return false;
 			}
 		});
 
@@ -122,7 +136,9 @@ public class OfflineOutListActivity extends BaseActivity implements View.OnClick
 		List<OfflineOutListBean> data = outDbUtils.queryInList(zdr_dm, sjk_dm, rkdd_dm, rqq, rq, page);
 		datas.addAll(data);
 		adapter.notifyDataSetChanged();
-		if (data.size() == 10) {
+		if (data.size() == 0) {
+			makeShortToase(R.string.loading_empty);
+		} else if (data.size() == 10) {
 			listView.setPullLoadEnable(true);
 		} else {
 			listView.setPullLoadEnable(false);

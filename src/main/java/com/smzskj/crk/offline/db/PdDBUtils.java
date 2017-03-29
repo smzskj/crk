@@ -25,7 +25,6 @@ public class PdDBUtils {
 	private SPUtils mSp;
 
 
-
 	public PdDBUtils(Context context) {
 		this.mContext = context;
 		this.mHelper = new OfflinePdHelper(mContext);
@@ -53,8 +52,8 @@ public class PdDBUtils {
 	 * @param pch
 	 * @return
 	 */
-	public long insert(String sph, String pch, String rq,String lrrq) {
-		if (querySphPch(sph, pch ,rq)) {
+	public long insert(String sph, String pch, String rq, String lrrq) {
+		if (querySphPch(sph, pch, rq)) {
 			L.e("-2");
 			return -2L;
 		}
@@ -102,7 +101,7 @@ public class PdDBUtils {
 	 * 更新数据库中盘点状态
 	 *
 	 * @param id id
-	 * @param zt  状态
+	 * @param zt 状态
 	 * @return 修改的id
 	 */
 	public int updateZt(String id, String zt) {
@@ -151,7 +150,7 @@ public class PdDBUtils {
 		SQLiteDatabase db = mHelper.getReadableDatabase();
 		Cursor cursor = db.query(OfflinePdHelper.TABLE_NAME_C_PDB, new String[]{"_id"}, "sph=? and " +
 				"pch=? and rq = ?", new String[]{sph,
-				pch,rq}, null, null, null);
+				pch, rq}, null, null, null);
 		boolean b = !(cursor.getCount() == 0);
 		cursor.close();
 		db.close();
@@ -184,7 +183,7 @@ public class PdDBUtils {
 	/**
 	 * 查询数据
 	 *
-	 * @param rq	日期
+	 * @param rq    日期
 	 * @param ry_dm 人员代码
 	 * @param db_dm 数据库代码
 	 * @return
@@ -228,7 +227,7 @@ public class PdDBUtils {
 		arr[0] = this.queryPdCount(rq, ry_dm, db_dm);
 		SQLiteDatabase db = mHelper.getReadableDatabase();
 		Cursor cursor = db.query(OfflinePdHelper.TABLE_NAME_C_PDB, new String[]{"_id"},
-				"zt = '2' and ry_dm = ? and sjk_dm = ? and (rq between ? and ? )", new String[]{ry_dm, db_dm , rq, rq},
+				"zt = '2' and ry_dm = ? and sjk_dm = ? and (rq between ? and ? )", new String[]{ry_dm, db_dm, rq, rq},
 				null,
 				null, null);
 		arr[1] = cursor.getCount();
@@ -271,11 +270,12 @@ public class PdDBUtils {
 
 	/**
 	 * 分页查询数据库
-	 * @param ry_dm 人员列表
-	 * @param db_dm 数据库代码
+	 *
+	 * @param ry_dm     人员列表
+	 * @param db_dm     数据库代码
 	 * @param dateStart 开始时间
-	 * @param dateEnd 结束时间
-	 * @param page 页数(从0开始)
+	 * @param dateEnd   结束时间
+	 * @param page      页数(从0开始)
 	 * @return OfflineCountListBean
 	 */
 	public List<OfflineCountListBean> queryCount(String ry_dm, String db_dm, String dateStart, String dateEnd, int
@@ -284,13 +284,13 @@ public class PdDBUtils {
 		SQLiteDatabase db = mHelper.getReadableDatabase();
 		Cursor cursor = db.rawQuery("select distinct c.rq," +
 						"(select count(_id) from c_pdb where sjk=c.sjk and ry=c.ry and rq=c.rq) as " +
-				"pds,(select count(_id) from c_pdb where zt='2' and sjk=c.sjk and ry=c.ry and " +
-				"rq=c.rq) as scs from c_pdb c "
-				+ "where c.ry_dm = ? and c.sjk_dm = ? "
-				+ "and (c.rq between ? and ?) "
+						"pds,(select count(_id) from c_pdb where zt='2' and sjk=c.sjk and ry=c.ry and " +
+						"rq=c.rq) as scs from c_pdb c "
+						+ "where c.ry_dm = ? and c.sjk_dm = ? "
+						+ "and (c.rq between ? and ?) "
 //				+ "c.rq >= ? and c.rq <= ? "
-				+ "order by c.rq desc limit 10 offset ? "
-				, new String[]{ry_dm,db_dm,dateStart,dateEnd,10 * page + ""});
+						+ "order by c.rq desc limit 10 offset ? "
+				, new String[]{ry_dm, db_dm, dateStart, dateEnd, 10 * page + ""});
 		int cursourCount = cursor.getCount();
 		if (cursourCount > 0) {
 			while (cursor.moveToNext()) {
@@ -304,5 +304,19 @@ public class PdDBUtils {
 		cursor.close();
 		db.close();
 		return datas;
+	}
+
+
+	/**
+	 * 删除此时间下的所有
+	 * @param ry_dm 人员代码
+	 * @param db_dm 数据库代码
+	 * @param rq 删除的日期
+	 */
+	public void deleteDjh(String ry_dm, String db_dm, String rq) {
+		SQLiteDatabase db = mHelper.getReadableDatabase();
+		db.delete(OfflinePdHelper.TABLE_NAME_C_PDB, "ry_dm = ? and sjk_dm = ? and (rq between ? and ?)", new
+				String[]{ry_dm, db_dm, rq, rq});
+		db.close();
 	}
 }

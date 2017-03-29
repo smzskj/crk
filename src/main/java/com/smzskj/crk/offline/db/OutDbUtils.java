@@ -170,4 +170,10 @@ public class OutDbUtils {
 		database.delete(OfflinePdHelper.TABLE_NAME_LXCK, "djhm = ? and pch = ? and sj = ?", new String[]{djhm, pch, sj});
 		database.close();
 	}
+
+	public void deleteDjhmPch(String djhm, String sj) {
+		SQLiteDatabase database = mHelper.getWritableDatabase();
+		database.delete(OfflinePdHelper.TABLE_NAME_LXCK, "djhm = ? and sj = ?", new String[]{djhm, sj});
+		database.close();
+	}
 }
