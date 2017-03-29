@@ -3,7 +3,6 @@ package com.smzskj.crk;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 
 import com.smzskj.crk.activity.LoginActivity;
 import com.smzskj.crk.base.BaseActivity;
@@ -28,10 +27,10 @@ public class MainActivity extends BaseActivity {
 		setContentView(R.layout.activity_main);
 
 
-		DisplayMetrics dm = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(dm);
-		L.e(dm.widthPixels + "*" + dm.heightPixels);
-		L.e("状态栏高度" + getStatusBarHeight());
+//		DisplayMetrics dm = new DisplayMetrics();
+//		getWindowManager().getDefaultDisplay().getMetrics(dm);
+//		L.e(dm.widthPixels + "*" + dm.heightPixels);
+//		L.e("状态栏高度" + getStatusBarHeight());
 
 
 		Constants.IP = mSp.getString(UserInfo.SP_IP,Constants.IP_DEFAULT);
