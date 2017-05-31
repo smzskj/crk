@@ -6,130 +6,153 @@
 
     <include
         android:id="@+id/top"
-        layout="@layout/include_topbar" />
+        layout="@layout/include_topbar"/>
 
-    <LinearLayout
-        android:id="@+id/bottom"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical"
-        android:padding="@dimen/act_padding">
+        android:layout_below="@id/top">
 
-        <Button
-            android:id="@+id/set_btn_logout"
-            style="@style/btnStyle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:text="@string/logout" />
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:padding="@dimen/act_padding">
 
-        <TextView
-            android:id="@+id/set_tv_name"
-            style="@style/textStyle"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:text="@string/app_name"
-            android:textSize="@dimen/textSize_small" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/set_tv_version"
-            style="@style/textStyle"
-            android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/textSize_small" />
+                <TextView
+                    android:id="@+id/set_tv_ip"
+                    style="@style/textStyle"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="IP："/>
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/set_btn_ip"
+                    style="@style/btnStyle"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/confirm"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom"
-        android:layout_below="@id/top"
-        android:orientation="vertical"
-        android:padding="@dimen/act_padding">
+                <EditText
+                    android:id="@+id/set_ed_ip"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/set_btn_ip"
+                    android:layout_toRightOf="@id/set_tv_ip"
+                    android:background="@drawable/bg_ed_shape"
+                    android:padding="5dp"/>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/set_tv_ip"
-                style="@style/textStyle"
-                android:layout_height="45dp"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="IP：" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/set_tv_port"
+                    style="@style/textStyle"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="端口："/>
+
+                <Button
+                    android:id="@+id/set_btn_port"
+                    style="@style/btnStyle"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/confirm"/>
+
+                <EditText
+                    android:id="@+id/set_ed_port"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@id/set_btn_port"
+                    android:layout_toRightOf="@id/set_tv_port"
+                    android:background="@drawable/bg_ed_shape"
+                    android:padding="5dp"/>
+            </RelativeLayout>
+
 
             <Button
-                android:id="@+id/set_btn_ip"
+                android:id="@+id/set_btn_uppwd"
                 style="@style/btnStyle"
-                android:layout_height="45dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="@string/confirm" />
-
-            <EditText
-                android:id="@+id/set_ed_ip"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@id/set_btn_ip"
-                android:layout_toRightOf="@id/set_tv_ip"
-                android:background="@drawable/bg_ed_shape"
-                android:padding="5dp" />
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/set_tv_port"
-                style="@style/textStyle"
-                android:layout_height="45dp"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:text="端口：" />
+                android:layout_marginTop="10dp"
+                android:text="修改密码"/>
 
             <Button
-                android:id="@+id/set_btn_port"
+                android:id="@+id/set_btn_update"
                 style="@style/btnStyle"
-                android:layout_height="45dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="@string/confirm" />
-
-            <EditText
-                android:id="@+id/set_ed_port"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="5dp"
-                android:layout_toLeftOf="@id/set_btn_port"
-                android:layout_toRightOf="@id/set_tv_port"
-                android:background="@drawable/bg_ed_shape"
-                android:padding="5dp" />
-        </RelativeLayout>
+                android:layout_marginTop="10dp"
+                android:text="检查更新"/>
+
+            <Button
+                android:id="@+id/set_btn_output"
+                style="@style/btnStyle"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="离线导出"/>
 
 
-        <Button
-            android:id="@+id/set_btn_uppwd"
-            style="@style/btnStyle"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:text="修改密码" />
+            <Button
+                android:id="@+id/set_btn_input"
+                style="@style/btnStyle"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="离线导入"/>
 
-        <Button
-            android:id="@+id/set_btn_update"
-            style="@style/btnStyle"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:text="检查更新" />
-    </LinearLayout>
+
+            <Button
+                android:id="@+id/set_btn_web"
+                style="@style/btnStyle"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="接口检测"/>
+
+
+            <Button
+                android:id="@+id/set_btn_logout"
+                style="@style/btnStyle"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="@string/logout"/>
+
+            <TextView
+                android:id="@+id/set_tv_name"
+                style="@style/textStyle"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:text="@string/app_name"
+                android:textSize="@dimen/textSize_small"/>
+
+            <TextView
+                android:id="@+id/set_tv_version"
+                style="@style/textStyle"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/textSize_small"/>
+        </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>

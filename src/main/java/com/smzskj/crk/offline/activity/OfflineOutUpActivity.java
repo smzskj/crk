@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  * Created by ztt on 2017/3/13.
- *
+ * <p>
  * 离线出库信息，上传
  */
 
@@ -63,7 +63,7 @@ public class OfflineOutUpActivity extends BaseActivity implements View.OnClickLi
 	private TextView tvSl;
 
 	public static void startOfflineOutUpActivity(Activity activity, String djhm, String zt,
-												String rq, String sl,String sj) {
+												 String rq, String sl, String sj) {
 		Intent intent = new Intent(activity, OfflineOutUpActivity.class);
 		intent.putExtra("djhm", djhm);
 		intent.putExtra("zt", zt);
@@ -98,7 +98,7 @@ public class OfflineOutUpActivity extends BaseActivity implements View.OnClickLi
 		/*
 		查询数据 并添加到listview中
 		 */
-		datas = outDbUtils.queryUpListBean(djhm, sjk_dm, rkdd_dm,sj);
+		datas = outDbUtils.queryUpListBean(djhm, sjk_dm, rkdd_dm, sj);
 		adapter = new OfflineInUpAdapter(mContext, datas, rkdd);
 		listView.setAdapter(adapter);
 		tvSl.setText("数量:" + datas.size());
@@ -112,9 +112,9 @@ public class OfflineOutUpActivity extends BaseActivity implements View.OnClickLi
 				showAlertDialog("是否删除此批次号？", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						outDbUtils.deleteDjhmPch(djhm,datas.get((int) id).getPch(), sj);
+						outDbUtils.deleteDjhmPch(djhm, datas.get((int) id).getPch(), sj);
 						dialog.cancel();
-						datas = outDbUtils.queryUpListBean(djhm, sjk_dm, rkdd_dm,sj);
+						datas = outDbUtils.queryUpListBean(djhm, sjk_dm, rkdd_dm, sj);
 						adapter = new OfflineInUpAdapter(mContext, datas, rkdd);
 						listView.setAdapter(adapter);
 						tvSl.setText("数量:" + datas.size());
@@ -175,7 +175,7 @@ public class OfflineOutUpActivity extends BaseActivity implements View.OnClickLi
 							jsp.put("批次号", bean.getPch());
 							jsp_arr.put(jsp);
 						}
-						jp_sub.put("出库商品",jsp_arr);
+						jp_sub.put("出库商品", jsp_arr);
 						String json = jp_sub.toString();
 						HttpJsonRequest request = new HttpJsonRequest(new CkBackListener(),
 								Method.SERVICE_NAME_CK, Method.CK_CK_LX, json);
@@ -206,11 +206,11 @@ public class OfflineOutUpActivity extends BaseActivity implements View.OnClickLi
 			}
 
 			if ("true".equals(bean.getRes())) {
-				outDbUtils.updateDjhmZt(djhm, "成功" , sj);
+				outDbUtils.updateDjhmZt(djhm, "成功", sj, 2);
 				btnUp.setVisibility(View.GONE);
 				tvZt.setText("状态:成功");
 			} else {
-				outDbUtils.updateDjhmZt(djhm, bean.getReason(), sj);
+				outDbUtils.updateDjhmZt(djhm, bean.getReason(), sj, 5);
 			}
 			makeShortToase(bean.getReason());
 		}

@@ -34,7 +34,7 @@ import java.util.List;
 
 /**
  * Created by ztt on 2017/3/13.
- *
+ * <p>
  * 离线入库信息，上传
  */
 
@@ -110,7 +110,7 @@ public class OfflineInUpActivity extends BaseActivity implements View.OnClickLis
 				showAlertDialog("是否删除此批次号？", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						inDbUtils.deleteDjhmPch(djhm,datas.get((int) id).getPch());
+						inDbUtils.deleteDjhmPch(djhm, datas.get((int) id).getPch());
 						dialog.cancel();
 						datas = inDbUtils.queryUpListBean(djhm, sjk_dm, rkdd_dm);
 						adapter = new OfflineInUpAdapter(mContext, datas, rkdd);
@@ -208,11 +208,11 @@ public class OfflineInUpActivity extends BaseActivity implements View.OnClickLis
 			}
 
 			if ("true".equals(bean.getRes())) {
-				inDbUtils.updateDjhmZt(djhm, "成功");
+				inDbUtils.updateDjhmZt(djhm, "成功", 2);
 				btnUp.setVisibility(View.GONE);
 				tvZt.setText("状态:成功");
 			} else {
-				inDbUtils.updateDjhmZt(djhm, bean.getReason());
+				inDbUtils.updateDjhmZt(djhm, bean.getReason(), 5);
 			}
 			makeShortToase(bean.getReason());
 		}

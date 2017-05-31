@@ -61,6 +61,7 @@ public class OutDbUtils {
 		values.put("sjk_dm", sjk_dm);
 		values.put("rq", rq);
 		values.put("zt", "未上传");
+		values.put("ztcode", 9);
 		values.put("bh", data.getSph());
 		values.put("spmc", data.getSpm());
 		values.put("dw", data.getDw());
@@ -91,7 +92,7 @@ public class OutDbUtils {
 		SQLiteDatabase database = mHelper.getWritableDatabase();
 		Cursor cursor = database.rawQuery("select  djhm , rq , zt , count(djhm) , sj " +
 						"from lxck where zdr_dm = ? and sjk_dm = ? "
-						+ "and (rq between ? and ?)  group by djhm , rq ,sj order by sj desc , djhm desc limit 10 offset ?"
+						+ "and (rq between ? and ?)  group by djhm , rq ,sj order by ztcode desc, sj desc , djhm desc limit 10 offset ?"
 				, new String[]{zdr_dm, sjk_dm, timeStart, timeEnd, page * 10 + ""});
 		int cursourCount = cursor.getCount();
 		L.e("cursourCount" + cursourCount);
@@ -156,10 +157,11 @@ public class OutDbUtils {
 	 * @param djhm 单据号码
 	 * @param zt   状态
 	 */
-	public void updateDjhmZt(String djhm, String zt, String sj) {
+	public void updateDjhmZt(String djhm, String zt, String sj,int ztcode) {
 		SQLiteDatabase database = mHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("zt", zt);
+		values.put("ztcode", ztcode);
 		database.update(OfflinePdHelper.TABLE_NAME_LXCK, values, "djhm = ? and sj = ?", new String[]{djhm, sj});
 		database.close();
 	}

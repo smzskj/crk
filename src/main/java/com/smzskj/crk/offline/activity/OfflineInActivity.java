@@ -337,6 +337,9 @@ public class OfflineInActivity extends BaseActivity implements View.OnClickListe
 	 * 商品弹窗
 	 */
 	private void spDialog(String bh) {
+		if (dialog != null && dialog.isShowing()) {
+			return;
+		}
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.ProgressDialog);
 		View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_sp, null, false);
 		spListView = findView(view, R.id.sp_lv);

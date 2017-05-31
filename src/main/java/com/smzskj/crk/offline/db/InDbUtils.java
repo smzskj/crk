@@ -56,6 +56,7 @@ public class InDbUtils {
 		values.put("sjk_dm", sjk_dm);
 		values.put("rq", rq);
 		values.put("zt", "未上传");
+		values.put("ztcode", 9);
 
 		for (InSbmBean bean : datas) {
 			values.put("bh", bean.getSph());
@@ -88,7 +89,7 @@ public class InDbUtils {
 		SQLiteDatabase database = mHelper.getWritableDatabase();
 		Cursor cursor = database.rawQuery("select  djhm , rq , zt , count(djhm)" +
 						"from lxrk where zdr_dm = ? and sjk_dm = ? "
-						+ "and (rq between ? and ?)  group by djhm , rq , zt order by djhm desc limit 10 offset ?"
+						+ "and (rq between ? and ?)  group by djhm , rq , ztcode order by ztcode desc,djhm desc limit 10 offset ?"
 				, new String[]{zdr_dm, sjk_dm, timeStart, timeEnd, page * 10 + ""});
 		int cursourCount = cursor.getCount();
 		L.e("cursourCount" + cursourCount);
@@ -212,10 +213,11 @@ public class InDbUtils {
 	 * @param djhm 单据号码
 	 * @param zt   状态
 	 */
-	public void updateDjhmZt(String djhm, String zt) {
+	public void updateDjhmZt(String djhm, String zt, int ztcode) {
 		SQLiteDatabase database = mHelper.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put("zt", zt);
+		values.put("ztcode", ztcode);
 		database.update(OfflinePdHelper.TABLE_NAME_LXRK, values, "djhm = ?", new String[]{djhm});
 		database.close();
 	}
@@ -223,8 +225,9 @@ public class InDbUtils {
 
 	/**
 	 * 删除单据号码下面的批次号
+	 *
 	 * @param djhm 单据号码
-	 * @param pch 批次号
+	 * @param pch  批次号
 	 */
 	public void deleteDjhmPch(String djhm, String pch) {
 		SQLiteDatabase database = mHelper.getWritableDatabase();

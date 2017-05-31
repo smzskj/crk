@@ -1,5 +1,6 @@
 package com.smzskj.crk.offline.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -33,7 +34,7 @@ public class OfflinePdHelper extends SQLiteOpenHelper {
 	 * 离线入库
 	 */
 	public static final String TABLE_NAME_LXCK = "lxck";
-	public static final int DB_VERSION = 4;
+	public static final int DB_VERSION = 5;
 
 
 	public OfflinePdHelper(Context context) {
@@ -53,6 +54,8 @@ public class OfflinePdHelper extends SQLiteOpenHelper {
 //	7，批次号不能为空
 //	8，离线盘点-商品号或条形码查询商品不存在!
 //	9，未上传
+//  1，离线盘点失败
+//  10，
 
 	public static final String SUCCESS = "2";
 	public static final String RQ_NULL = "3";
@@ -138,15 +141,55 @@ public class OfflinePdHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
 		if (oldVersion == 1) {
 			db.execSQL(SqlCreateLxsp);
 			db.execSQL(SqlCreateLxrk);
 			db.execSQL(SqlCreateLxck);
+			sqlVersion5(db);
 		} else if (oldVersion == 2) {
 			db.execSQL(SqlCreateLxrk);
 			db.execSQL(SqlCreateLxck);
-		} else if (oldVersion ==3) {
+			sqlVersion5(db);
+		} else if (oldVersion == 3){
 			db.execSQL(SqlCreateLxck);
+			sqlVersion5(db);
+		} else if (oldVersion == 4) {
+			sqlVersion5(db);
 		}
+	}
+
+	/**
+	 * 版本5修改数据库表，添加离线入库和离线出库状态码
+	 */
+	private void sqlVersion5(SQLiteDatabase db) {
+		// 版本5添加一列
+		String sql5_1 = "alter table lxck add ztcode int default 5";
+		String sql5_2 = "alter table lxrk add ztcode int default 5";
+
+		db.execSQL(sql5_1);
+		db.execSQL(sql5_2);
+
+		ContentValues values1 = new ContentValues();
+		values1.put("ztcode", 9);
+		db.update(OfflinePdHelper.TABLE_NAME_LXCK, values1, "zt = '未上传'", new
+				String[]{});
+
+		ContentValues values2 = new ContentValues();
+		values2.put("ztcode", 2);
+		db.update(OfflinePdHelper.TABLE_NAME_LXCK, values2, "zt = '成功'", new
+				String[]{});
+
+
+		ContentValues values3 = new ContentValues();
+		values3.put("ztcode", 9);
+		db.update(OfflinePdHelper.TABLE_NAME_LXRK, values3, "zt = '未上传'", new
+				String[]{});
+
+
+		ContentValues values4 = new ContentValues();
+		values4.put("ztcode", 2);
+		db.update(OfflinePdHelper.TABLE_NAME_LXRK, values4, "zt = '成功'", new
+				String[]{});
 	}
 }

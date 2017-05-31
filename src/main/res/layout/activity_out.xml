@@ -19,7 +19,7 @@
             android:id="@+id/out_ll_dz"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -33,6 +33,30 @@
                 android:layout_marginLeft="10dp"
                 android:text="@string/repertory_dz"/>
 
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorDivider"/>
+
+        <LinearLayout
+            android:id="@+id/out_ll_cx"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_cx"/>
+
+            <TextView
+                style="@style/textStyle"
+                android:layout_marginLeft="10dp"
+                android:text="@string/query"/>
         </LinearLayout>
 
         <View

@@ -139,6 +139,22 @@ public class OfflineOutActivity extends BaseActivity implements View.OnClickList
 		tvCk.setText(mSp.getString(UserInfo.SP_CK_NAME, ""));
 
 		listView.addHeaderView(view);
+
+		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				final int p = (int) id;
+				final String pch = pchDatas.get(p);
+				showAlertDialog("是否要删除此批次号" + pch + "？", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						pchDatas.remove(p);
+						adapter.notifyDataSetChanged();
+					}
+				});
+				return false;
+			}
+		});
 	}
 
 	@Override
@@ -218,6 +234,9 @@ public class OfflineOutActivity extends BaseActivity implements View.OnClickList
 	 * 商品弹窗
 	 */
 	private void spDialog(String bh) {
+		if (dialog != null && dialog.isShowing()) {
+			return;
+		}
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.ProgressDialog);
 		View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_sp, null, false);
 		spListView = findView(view, R.id.sp_lv);

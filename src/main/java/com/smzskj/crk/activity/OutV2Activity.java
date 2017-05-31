@@ -68,7 +68,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 	private XListView listView;
 	private EditText edDh, edBzm;
 	private TextView tvSpsl, tvQrsl;
-	private LinearLayout llQrjx, llDz, llQx;
+	private LinearLayout llQrjx, llDz, llQx, llCx;
 	private ImageButton ibSm, ibScanner;
 
 	private LayoutInflater inflater;
@@ -119,11 +119,13 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 		llQrjx = findView(R.id.out_ll_qrjx);
 		llDz = findView(R.id.out_ll_dz);
 		llQx = findView(R.id.out_ll_qx);
+		llCx = findView(R.id.out_ll_cx);
 		ibScanner = findView(R.id.out_ib_scanner);
 		ibScanner.setOnClickListener(this);
 		llQrjx.setOnClickListener(this);
 		llDz.setOnClickListener(this);
 		llQx.setOnClickListener(this);
+		llCx.setOnClickListener(this);
 
 		adapter = new OutPchAdapter(mContext, datas);
 		listView.setAdapter(adapter);
@@ -185,6 +187,11 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 					}
 				});
 				break;
+			case R.id.out_ll_cx:
+				if (edDh.isEnabled()) {
+					ck_get_dhinfo();
+				}
+				break;
 			default:
 				break;
 		}
@@ -206,7 +213,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 				player.start();
 				if (edDh.isEnabled()) {
 					edDh.setText(barCode);
-//					ck_get_dhinfo();
+					ck_get_dhinfo();
 				} else {
 					if (!TextUtils.isEmpty(barCode)) {
 						edBzm.setText(barCode);
@@ -227,7 +234,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 	 */
 	private void dzPch() {
 		String pch = edBzm.getText().toString();
-		if (pch.length() < 8) {
+		if (pch.length() < 3) {
 			makeShortToase(R.string.scanner_error);
 		} else {
 
@@ -245,8 +252,10 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 			if (pchdz) {
 				makeShortToase("此批次号已经登账，不能重复登账");
 			} else {
+//				ck_chk_pch_zc_v2(pch);
+
 				if (isReturn) {
-					ck_chk_pch_th_v2(pch);
+					ck_chk_pch_th_f_v2(pch);
 				} else {
 					ck_chk_pch_zc_v2(pch);
 				}
@@ -273,12 +282,13 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 			return;
 		}
 		showLoadDialog();
+		// 2017年05月22日14:14:16添加参数库房名称(接口切换为CK_GET_DHINFO_V2 CK_GET_DHINFO_V3)
 		HttpJsonRequest request = new HttpJsonRequest(new DhInfoBackListener(),
-				Method.SERVICE_NAME_CK, Method.CK_GET_DHINFO_V2, dh);
+				Method.SERVICE_NAME_CK, Method.CK_GET_DHINFO_V3, dh, lkfmc);
 		ThreadPoolUtils.execute(request);
 	}
 
-	class DhInfoBackListener implements HttpJsonRequest.CallbackListener {
+	private class DhInfoBackListener implements HttpJsonRequest.CallbackListener {
 
 		@Override
 		public void callBack(String result) {
@@ -315,6 +325,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 
 
 			// 2017-03-28 退货不检查库房，正常出库检查库房
+			// 2017-03-31 退货检查库房
 			// 数据为double类型的字符串，去掉小数点，小于0是退货
 			try {
 				double djslDouble = Double.valueOf(djsl);
@@ -323,6 +334,11 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 
 					// 循环批次号信息，检查仓库名称，服务器包含本地才可以入库
 					for (OutDhBeanPch.RowsBean beanPch : dhBeanPch.getRows()) {
+						if (beanPch.get库房名称() == null || !lkfmc.equals(beanPch.get库房名称().trim())) {
+							makeShortToase(R.string.kf_error);
+							tvQrsl.setText("0");
+							return;
+						}
 						if (beanPch.getD登账()) {
 							setQrsl(beanPch.get出库数());
 						}
@@ -333,7 +349,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 
 					// 循环批次号信息，检查仓库名称，服务器包含本地才可以入库
 					for (OutDhBeanPch.RowsBean beanPch : dhBeanPch.getRows()) {
-						if (beanPch.get库房名称() == null || !beanPch.get库房名称().contains(lkfmc)) {
+						if (beanPch.get库房名称() == null || !lkfmc.equals(beanPch.get库房名称().trim())) {
 							makeShortToase(R.string.kf_error);
 							tvQrsl.setText("0");
 							return;
@@ -365,47 +381,48 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 	 *
 	 * @param pch 批次号
 	 */
-	private void ck_chk_pch_th_v2(String pch) {
+	private void ck_chk_pch_th_v2(String pch, OutDhBeanPch.RowsBean bean) {
 		String dh = edDh.getText().toString();
 		if (TextUtils.isEmpty(dh)) {
 			makeShortToase("单号不能为空");
 			return;
 		}
-		int spIndex = -1;
-		String spBh = "";
-		String spPch = "";
-		for (int i = 0; i < dataSize; i++) {
-			if (!datas.get(i).getD登账()) {
-				spIndex = i;
-				spBh = datas.get(i).get编号();
-				spPch = datas.get(i).get批次号();
-				break;
-			}
-		}
+//		int spIndex = -1;
+//		String spBh = "";
+//		String spPch = "";
+//		for (int i = 0; i < dataSize; i++) {
+//			if (!datas.get(i).getD登账()) {
+//				spIndex = i;
+//				spBh = datas.get(i).get编号();
+//				spPch = datas.get(i).get批次号();
+//				break;
+//			}
+//		}
 
 		// 如果扫描批次号和批次号相同，直接登账
-		if (pch.equals(spPch)) {
-			datas.get(spIndex).setD登帐();
+		if (pch.equals(bean.get批次号())) {
+			bean.setD登帐();
 			adapter.notifyDataSetChanged();
 			return;
 		}
 
 		showLoadDialog();
-		HttpJsonRequest request = new HttpJsonRequest(new PchThBackListener(spIndex, pch),
-				Method.SERVICE_NAME_CK, Method.CK_CHK_PCH_TH_V2, lkfmc, spBh, dh, pch);
+		HttpJsonRequest request = new HttpJsonRequest(new PchThBackListener(bean, pch),
+				Method.SERVICE_NAME_CK, Method.CK_CHK_PCH_TH_V2, lkfmc, bean.get编号(), dh, pch);
 		ThreadPoolUtils.execute(request);
 	}
 
 	/**
 	 * 退货
 	 */
-	class PchThBackListener implements HttpJsonRequest.CallbackListener {
+	private class PchThBackListener implements HttpJsonRequest.CallbackListener {
 
-		private int index;
+		//		private int index;
 		private String pch;
+		private OutDhBeanPch.RowsBean rowsBean;
 
-		public PchThBackListener(int index, String pch) {
-			this.index = index;
+		PchThBackListener(OutDhBeanPch.RowsBean bean, String pch) {
+			this.rowsBean = bean;
 			this.pch = pch;
 		}
 
@@ -433,12 +450,14 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 			if (outPchTh != null && outPchTh.getRows() != null && outPchTh.getRows().size() != 0) {
 				makeShortToase("此批次号的商品已经存在，不能退回！");
 			} else {
-				if (TextUtils.isEmpty(datas.get(index).get批次号())) {
+//				rowsBean  datas.get(index)
+				if (TextUtils.isEmpty(rowsBean.get批次号())) {
 					if (outPchZjk != null && outPchZjk.getRows() != null && outPchZjk.getRows().size() > 0) {
-						datas.get(index).setD登帐();
-						datas.get(index).set批次号(pch);
-						setQrsl(datas.get(index).get出库数());
+						rowsBean.setD登帐();
+						rowsBean.set批次号(pch);
+						setQrsl(rowsBean.get出库数());
 						adapter.notifyDataSetChanged();
+						makeShortToase("确认成功");
 					} else {
 						showAlertDialog
 								("销售记录里没有此批次号的商品，请确认是否为单品核算前的销售，如果是，可以强行退货，强行退货吗？", new DialogInterface.OnClickListener() {
@@ -446,25 +465,53 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 									public void onClick(DialogInterface dialog, int
 											which) {
 										dialog.cancel();
-										datas.get(index).setD登帐();
-										datas.get(index).set批次号(pch);
-										setQrsl(datas.get(index).get出库数());
+										rowsBean.setD登帐();
+										rowsBean.set批次号(pch);
+										setQrsl(rowsBean.get出库数());
 										adapter.notifyDataSetChanged();
+										makeShortToase("确认成功");
 									}
 								});
 					}
 				} else {
 					if (outPchZjk_n != null) {
 						if (outPchZjk_n.getRows() != null && outPchZjk_n.getRows().size() > 0) {
-							datas.get(index).setD登帐();
-							datas.get(index).set批次号(pch);
-							setQrsl(datas.get(index).get出库数());
+							rowsBean.setD登帐();
+							rowsBean.set批次号(pch);
+							setQrsl(rowsBean.get出库数());
 							adapter.notifyDataSetChanged();
+							makeShortToase("确认成功");
 						} else {
-							makeShortToase("没有销售过此批次号的商品，不能退货！");
+//							makeShortToase("没有销售过此批次号的商品，不能退货！");
+							showAlertDialog
+									("此批次号未查询到销售，是否强行入库？", new DialogInterface.OnClickListener() {
+										@Override
+										public void onClick(DialogInterface dialog, int
+												which) {
+											dialog.cancel();
+											rowsBean.setD登帐();
+											rowsBean.set批次号(pch);
+											setQrsl(rowsBean.get出库数());
+											adapter.notifyDataSetChanged();
+											makeShortToase("确认成功");
+										}
+									});
 						}
 					} else {
-						makeShortToase("没有销售过此批次号的商品，不能退货！");
+//						makeShortToase("没有销售过此批次号的商品，不能退货！");
+						showAlertDialog
+								("此批次号未查询到销售，是否强行入库？", new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog, int
+											which) {
+										dialog.cancel();
+										rowsBean.setD登帐();
+										rowsBean.set批次号(pch);
+										setQrsl(rowsBean.get出库数());
+										adapter.notifyDataSetChanged();
+										makeShortToase("确认成功");
+									}
+								});
 					}
 				}
 			}
@@ -495,15 +542,39 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 		ThreadPoolUtils.execute(request);
 	}
 
+	/**
+	 * 退货出库批次号查询，出库批次号都是空
+	 *
+	 * @param pch 批次号
+	 */
+	private void ck_chk_pch_th_f_v2(String pch) {
+		String dh = edDh.getText().toString();
+		if (TextUtils.isEmpty(dh)) {
+			makeShortToase("单号不能为空");
+			return;
+		}
+		String spBh = "";
+		for (int i = 0; i < dataSize; i++) {
+			if (!datas.get(i).getD登账()) {
+				spBh = datas.get(i).get编号();
+				break;
+			}
+		}
+		showLoadDialog();
+		HttpJsonRequest request = new HttpJsonRequest(new PchZcBackListener(pch),
+				Method.SERVICE_NAME_CK, Method.CK_CHK_PCH_TH_F_V2, lkfmc, spBh, dh, pch);
+		ThreadPoolUtils.execute(request);
+	}
+
 
 	/**
-	 * 正常出库
+	 * 退货正常出库走不同接口，返回回调都走一个
 	 */
-	class PchZcBackListener implements HttpJsonRequest.CallbackListener {
+	private class PchZcBackListener implements HttpJsonRequest.CallbackListener {
 
 		private String pch;
 
-		public PchZcBackListener(String pch) {
+		PchZcBackListener(String pch) {
 			this.pch = pch;
 		}
 
@@ -521,37 +592,48 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 				return;
 			}
 			if (bean.getRows().size() <= 0) {
-				showAlertDialog
-						("没有查询到商品信息，是否强制出库？", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int
-									which) {
-								dialog.cancel();
-								boolean isck = false;
-								for (OutDhBeanPch.RowsBean bean : datas) {
-									// 批次号为空，并且商品编号相同
-									if (TextUtils.isEmpty(bean.get批次号().trim())) {
-										bean.set批次号(pch);
-										bean.setD登帐();
-										adapter.notifyDataSetChanged();
-										setQrsl(bean.get出库数());
-										isck = true;
-										break;
+
+				if (isReturn) {
+					for (OutDhBeanPch.RowsBean rowsBean : datas) {
+						// 退货，第一条未登账，进行登账
+						if (!rowsBean.getD登账()) {
+							ck_chk_pch_th_v2(pch, rowsBean);
+							return;
+						}
+					}
+					// 没有未登账
+					makeShortToase("已经全部出库");
+				} else {
+					showAlertDialog
+							("没有查询到商品信息，是否强制出库？", new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int
+										which) {
+									dialog.cancel();
+									boolean isck = false;
+									for (OutDhBeanPch.RowsBean bean : datas) {
+
+										// 批次号为空，并且商品编号相同
+										if (TextUtils.isEmpty(bean.get批次号().trim()) && !bean.getD登账()) {
+											bean.set批次号(pch);
+											bean.setD登帐();
+											adapter.notifyDataSetChanged();
+											setQrsl(bean.get出库数());
+											isck = true;
+											break;
+										}
+									}
+
+									if (!isck) {
+										makeShortToase("已经全部出库");
+									} else {
+										makeShortToase("确认成功");
 									}
 								}
-
-								if (!isck) {
-									makeShortToase("已经全部出库");
-								} else {
-									makeShortToase("确认成功");
-								}
-							}
-						});
-				return;
-			}
-
-			if (bean.getRows().size() == 1) {
-				zcck(pch, bean.getRows().get(0));
+							});
+				}
+			} else if (bean.getRows().size() == 1) {
+				selectBhSp(pch, bean.getRows().get(0));
 			} else {
 				spDialog(pch, bean.getRows());
 			}
@@ -559,33 +641,56 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 	}
 
 	/**
-	 * 正常出库
+	 * 退货修改，先通过正常出库查询商品，然后走退货流程
+	 * <p>
+	 * 选择编号对应商品
 	 *
 	 * @param pch
 	 * @param rowsBean
 	 */
-	private void zcck(String pch, OutZcBean.RowsBean rowsBean) {
-		boolean isck = false;
-		for (OutDhBeanPch.RowsBean bean : datas) {
-			// 批次号为空，并且商品编号相同
-			if (TextUtils.isEmpty(bean.get批次号().trim()) && bean.get编号().trim().equals(rowsBean.get编号().trim())) {
-				bean.set批次号(pch);
-				bean.setD登帐();
-				adapter.notifyDataSetChanged();
-				setQrsl(bean.get出库数());
-				isck = true;
-				break;
+	private void selectBhSp(String pch, OutZcBean.RowsBean rowsBean) {
+		if (!isReturn) {
+			boolean isck = false;
+			for (OutDhBeanPch.RowsBean bean : datas) {
+				// 批次号为空，并且商品编号相同
+				if (TextUtils.isEmpty(bean.get批次号().trim()) && bean.get编号().trim().equals(rowsBean.get编号().trim())) {
+					bean.set批次号(pch);
+					bean.setD登帐();
+					adapter.notifyDataSetChanged();
+					setQrsl(bean.get出库数());
+					isck = true;
+					break;
+				}
 			}
-		}
-		if (!isck) {
+			if (!isck) {
+				if (!spBhs.contains(rowsBean.get编号())) {
+					makeShortToase("批次号为" + pch + "的商品在库存里是：" + rowsBean.get编号() + rowsBean.get商品名称() + "不能出库！");
+				} else {
+					makeShortToase("此品已经全部出库");
+				}
+			} else {
+				makeShortToase("确认成功");
+			}
+		} else {
+			for (OutDhBeanPch.RowsBean bean : datas) {
+				// 商品编号相同,并且不为D
+				if (bean.get编号().trim().equals(rowsBean.get编号().trim()) && !bean.getD登账()) {
+//					bean.set批次号(pch);
+//					bean.setD登帐();
+//					adapter.notifyDataSetChanged();
+//					setQrsl(bean.get出库数());
+					ck_chk_pch_th_v2(pch, bean);
+					return;
+				}
+			}
 			if (!spBhs.contains(rowsBean.get编号())) {
 				makeShortToase("批次号为" + pch + "的商品在库存里是：" + rowsBean.get编号() + rowsBean.get商品名称() + "不能出库！");
 			} else {
-				makeShortToase("此商品已经全部出库");
+				makeShortToase("此品已经全部出库");
 			}
-		} else {
-			makeShortToase("确认成功");
+
 		}
+
 	}
 
 	private AlertDialog dialog;
@@ -605,7 +710,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				int p = (int) id;
-				zcck(pch, list.get(p));
+				selectBhSp(pch, list.get(p));
 				dialog.cancel();
 			}
 		});
@@ -629,9 +734,9 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 	}
 
 
-	class SpAdapter extends BaseViewAdapter<OutZcBean.RowsBean> {
+	private class SpAdapter extends BaseViewAdapter<OutZcBean.RowsBean> {
 
-		public SpAdapter(Context context, List<OutZcBean.RowsBean> list) {
+		SpAdapter(Context context, List<OutZcBean.RowsBean> list) {
 			super(context, list);
 		}
 
@@ -687,7 +792,7 @@ public class OutV2Activity extends BaseActivity implements View.OnClickListener 
 	}
 
 
-	class CkBackListener implements HttpJsonRequest.CallbackListener {
+	private class CkBackListener implements HttpJsonRequest.CallbackListener {
 
 		@Override
 		public void callBack(String result) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,7 +40,7 @@ import java.util.Locale;
 public class SelectRepertoryActivity extends BaseActivity implements View.OnClickListener {
 
 	private Spinner spinner;
-	private Button btnIn, btnOut, btnCheck, btnGet, btnQuery , btnOffline;
+	private Button btnIn, btnOut, btnCheck, btnGet, btnQuery, btnOffline;
 	private List<RepertoryBean> repertoryList = new ArrayList<>();
 
 	public static void startSelectRepertoryActivity(Context context) {
@@ -174,8 +175,10 @@ public class SelectRepertoryActivity extends BaseActivity implements View.OnClic
 						}
 						int size = repertoryList.size();
 						String[] names = new String[size];
+//						String[] codes = new String[size];
 						for (int i = 0; i < size; i++) {
 							names[i] = repertoryList.get(i).get库房名称();
+//							codes[i] = repertoryList.get(i).get库房号();
 						}
 						ArrayAdapter adapter = new ArrayAdapter<String>(mContext, R.layout
 								.item_spinner_white,
@@ -240,7 +243,7 @@ public class SelectRepertoryActivity extends BaseActivity implements View.OnClic
 		String rq = sdf_ymd.format(new Date(System.currentTimeMillis()));
 		HttpJsonRequest request = new HttpJsonRequest(new PDinfoBackListener(),
 				Method.SERVICE_NAME_PD, Method.PD_CHK_INFO
-				, mSp.getString(UserInfo.SP_USER_CODE,""), kf, rq );
+				, mSp.getString(UserInfo.SP_USER_CODE, ""), kf, rq);
 		ThreadPoolUtils.execute(request);
 	}
 
@@ -267,7 +270,7 @@ public class SelectRepertoryActivity extends BaseActivity implements View.OnClic
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									dialog.cancel();
-									pd_cz_info();
+									pdcz();
 								}
 							}, new DialogInterface.OnClickListener() {
 								@Override
@@ -283,6 +286,45 @@ public class SelectRepertoryActivity extends BaseActivity implements View.OnClic
 		}
 	}
 
+	private void pdcz() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setTitle(getString(R.string.dialog_alert));
+		builder.setMessage("请选择重置类型");
+		// 左
+		builder.setNegativeButton("重置所有", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+				pd_cz_info_kfc();
+			}
+		});
+
+		builder.setPositiveButton("重置当天", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+				pd_cz_info();
+			}
+		});
+		builder.show();
+	}
+
+	/**
+	 * 检查盘点信息
+	 * <p>
+	 * 库房名
+	 * 日期
+	 */
+	private void pd_cz_info_kfc() {
+		showLoadDialog();
+		String kf = mSp.getString(UserInfo.SP_CK_NAME, "");
+		String rq = sdf_ymd.format(new Date(System.currentTimeMillis()));
+		HttpJsonRequest request = new HttpJsonRequest(new CzBackListener(),
+				Method.SERVICE_NAME_PD, Method.PD_CZ_INFO_KFC
+				, mSp.getString(UserInfo.SP_USER_CODE, ""), kf, rq);
+		ThreadPoolUtils.execute(request);
+	}
+
 	/**
 	 * 检查盘点信息
 	 * <p>
@@ -295,7 +337,7 @@ public class SelectRepertoryActivity extends BaseActivity implements View.OnClic
 		String rq = sdf_ymd.format(new Date(System.currentTimeMillis()));
 		HttpJsonRequest request = new HttpJsonRequest(new CzBackListener(),
 				Method.SERVICE_NAME_PD, Method.PD_CZ_INFO
-				, mSp.getString(UserInfo.SP_USER_CODE,""), kf, rq);
+				, mSp.getString(UserInfo.SP_USER_CODE, ""), kf, rq);
 		ThreadPoolUtils.execute(request);
 	}
 
@@ -317,7 +359,13 @@ public class SelectRepertoryActivity extends BaseActivity implements View.OnClic
 					if ("true".equals(returnBean.getRes())) {
 						startPd();
 					} else {
-						makeShortToase(returnBean.getReason());
+
+						showAlertDialog(getString(R.string.dialog_alert), returnBean.getReason(), new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								startPd();
+							}
+						}, null);
 					}
 				}
 			}

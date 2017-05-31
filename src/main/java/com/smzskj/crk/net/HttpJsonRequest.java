@@ -49,6 +49,8 @@ public class HttpJsonRequest implements Runnable {
 
 	@Override
 	public void run() {
+		L.e(Thread.currentThread().getName());
+
 		handler.sendMessage(Message.obtain(handler, HttpJsonRequest.DID_START));
 		HttpTransportSE ht = null;
 		try {
@@ -72,10 +74,12 @@ public class HttpJsonRequest implements Runnable {
 			jreq.put("params", jparams);
 
 			L.e(jreq.toString());
+			L.e(handler.toString());
 			params.clear();
 			params.add(new ParamData<String>(String.class, jreq.toString()));
 
 			SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER10);
+			// 指定WebService的命名空间和调用方法
 			SoapObject soapObject = new SoapObject(Constants.NAME_SPACE, Constants.METHOD);
 			for (int i = 0; i < params.size(); i++) {
 				String val = String.valueOf(params.get(i).getData());
@@ -96,6 +100,8 @@ public class HttpJsonRequest implements Runnable {
 			} else {
 				this.sendMessage("");
 			}
+
+			L.e("正常流程");
 		}catch (EOFException eofe){
 			// 异常重连机制
 			if (size < 3) {
@@ -106,6 +112,7 @@ public class HttpJsonRequest implements Runnable {
 				this.sendMessage("");
 			}
 		} catch (Exception e) {
+			L.e("Exception" + e.getMessage());
 			this.sendMessage("");
 		} finally {
 			try {
@@ -128,6 +135,7 @@ public class HttpJsonRequest implements Runnable {
 					break;
 				}
 				case HttpJsonRequest.DID_SUCCEED: {
+					L.e(Thread.currentThread().getName());
 					// CommonDoBack.print(CommonDoBack.LOG_TYPE_DEBUG,Tag,"Http请求返回成功");
 					CallbackListener listener = (CallbackListener) message.obj;
 					Object data = message.getData();

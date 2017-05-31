@@ -56,8 +56,11 @@ public class Method {
 
 	/** 获得出库信息V2 */
 	public static String CK_GET_DHINFO_V2 = "ck_get_dhinfo_v2";
+	public static String CK_GET_DHINFO_V3 = "ck_get_dhinfo_v3";
 	/** 出库 批次号查询 退货 V2 */
 	public static String CK_CHK_PCH_TH_V2 = "ck_chk_pch_th_v2";
+	/** 出库 批次号检查，选取商品 退货 V2 */
+	public static String CK_CHK_PCH_TH_F_V2 = "ck_chk_pch_th_f_v2";
 	/** 出库 批次号查询 正常 V2 */
 	public static String CK_CHK_PCH_ZC_V2 = "ck_chk_pch_zc_v2";
 	/** 出库 v2 */
@@ -73,6 +76,7 @@ public class Method {
 	public static String PD_CHK_INFO = "pd_chk_info";
 	/** 重置盘点信息 */
 	public static String PD_CZ_INFO = "pd_cz_info";
+	public static String PD_CZ_INFO_KFC = "pd_cz_info_kfc";
 	/** 获得商品信息 */
 	public static String PD_GET_SPINFO = "pd_get_spinfo";
 	/** 盘点 */

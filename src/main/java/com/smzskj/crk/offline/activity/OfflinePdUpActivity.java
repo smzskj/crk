@@ -225,7 +225,7 @@ public class OfflinePdUpActivity extends BaseActivity {
 						if (OfflinePdHelper.SUCCESS.equals(objBean.getErr_code())) {
 							pdDBUtils.deleteID(objBean.getId());
 						} else {
-							pdDBUtils.updateZt(objBean.getId(), objBean.getErr_code());
+							pdDBUtils.updateZt(objBean.getId(), objBean.getSub_reason());
 						}
 					}
 					datas.clear();

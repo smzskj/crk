@@ -136,27 +136,34 @@ public class OfflineBean {
 		this.kf_dm = kf_dm;
 	}
 
-	public String getZtStr(){
+	public String getZtStr() {
 		String ztStr = "";
+
 		if (OfflinePdHelper.SUCCESS.equals(zt)) {
 			ztStr = "成功";
-		} else if (OfflinePdHelper.RQ_NULL.equals(zt)) {
-			ztStr = "日期不能为空";
-		} else if (OfflinePdHelper.KF_NULL.equals(zt)) {
-			ztStr = "库房名称不能为空";
-		} else if (OfflinePdHelper.RY_NULL.equals(zt)) {
-			ztStr = "人员不能为空";
-		} else if (OfflinePdHelper.SPH_NULL.equals(zt)) {
-			ztStr = "商品号不能为空";
-		} else if (OfflinePdHelper.PCH_NULL.equals(zt)) {
-			ztStr = "批次号不能为空";
-		} else if (OfflinePdHelper.SP_NULL.equals(zt)) {
-			ztStr = "离线盘点-商品号或条形码查询商品不存在!";
-		}  else if (OfflinePdHelper.NOT_UP.equals(zt)) {
+		} else if (OfflinePdHelper.NOT_UP.equals(zt)) {
 			ztStr = "未上传";
 		} else {
-			ztStr = "未知状态";
+			ztStr = zt;
 		}
+
+//		else if (OfflinePdHelper.RQ_NULL.equals(zt)) {
+//			ztStr = "日期不能为空";
+//		} else if (OfflinePdHelper.KF_NULL.equals(zt)) {
+//			ztStr = "库房名称不能为空";
+//		} else if (OfflinePdHelper.RY_NULL.equals(zt)) {
+//			ztStr = "人员不能为空";
+//		} else if (OfflinePdHelper.SPH_NULL.equals(zt)) {
+//			ztStr = "商品号不能为空";
+//		} else if (OfflinePdHelper.PCH_NULL.equals(zt)) {
+//			ztStr = "批次号不能为空";
+//		} else if (OfflinePdHelper.SP_NULL.equals(zt)) {
+//			ztStr = "离线盘点-商品号或条形码查询商品不存在!";
+//		}  else if (OfflinePdHelper.NOT_UP.equals(zt)) {
+//			ztStr = "未上传";
+//		} else {
+//			ztStr = "未知状态";
+//		}
 		return ztStr;
 	}
 }

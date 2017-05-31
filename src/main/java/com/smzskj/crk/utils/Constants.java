@@ -8,7 +8,7 @@ package com.smzskj.crk.utils;
 
 public class Constants {
 
-	public static boolean IS_DEBUG = true;
+	public static boolean IS_DEBUG = false;
 
 	public static final int KEY_SCAN = 135;
 	public static final String CHAR_SET = "utf-8";

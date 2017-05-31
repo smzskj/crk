@@ -170,11 +170,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 		HttpJsonRequest request = new HttpJsonRequest(new LoginCallBackListener(),
 				Method.SERVICE_NAME_LOGIN, Method.LOGIN_LOGIN,
 				un, HashUtils.Md5(pwd));
-		L.e(Constants.URL);
 		ThreadPoolUtils.execute(request);
 	}
 
-	class LoginCallBackListener implements HttpJsonRequest.CallbackListener {
+	private class LoginCallBackListener implements HttpJsonRequest.CallbackListener {
 
 		@Override
 		public void callBack(String result) {
@@ -255,18 +254,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 			} else {
 				if ("100".equals(returnBean.getCode()) && returnBean.getRows() != null && returnBean.getRows().size() > 0) {
 					DbBean.RowsBean db = new DbBean.RowsBean();
-					db.setDb_dm("00");
+					db.setDb_dm("请选择数据库");
 					db.setDb_mc("请选择数据库");
+					db.setDb_bh("请选择数据库");
 					dbList.add(db);
 					dbList.addAll(returnBean.getRows());
 					int size = dbList.size();
-					String[] names = new String[size];
+//					String[] names = new String[size];
+					String[] codes = new String[size];
 					for (int i = 0; i < size; i++) {
-						names[i] = dbList.get(i).getDb_mc();
+//						names[i] = dbList.get(i).getDb_mc();
+						codes[i] = dbList.get(i).getDb_bh();
 					}
 					ArrayAdapter adapter = new ArrayAdapter<String>(mContext, R.layout
 							.item_spinner_white,
-							names);
+							codes);
 					adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item);
 					spinner.setAdapter(adapter);
 

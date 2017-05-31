@@ -11,15 +11,10 @@ public class DbBean {
 
 	/**
 	 * code : 100
-	 * rows : [{"db_dm":"dsr_ml","db_mc":"数据库01"}]
+	 * rows : [{"db_dm":"dsr_ml","db_mc":"数据库01","db_bh":"tzbh01","db_jc":"01"}]
 	 */
 
 	private String code;
-	/**
-	 * db_dm : dsr_ml
-	 * db_mc : 数据库01
-	 */
-
 	private List<RowsBean> rows;
 
 	public String getCode() {
@@ -39,8 +34,17 @@ public class DbBean {
 	}
 
 	public static class RowsBean {
+		/**
+		 * db_dm : dsr_ml
+		 * db_mc : 数据库01
+		 * db_bh : tzbh01
+		 * db_jc : 01
+		 */
+
 		private String db_dm;
 		private String db_mc;
+		private String db_bh;
+		private String db_jc;
 
 		public String getDb_dm() {
 			return db_dm;
@@ -56,6 +60,22 @@ public class DbBean {
 
 		public void setDb_mc(String db_mc) {
 			this.db_mc = db_mc;
+		}
+
+		public String getDb_bh() {
+			return db_bh;
+		}
+
+		public void setDb_bh(String db_bh) {
+			this.db_bh = db_bh;
+		}
+
+		public String getDb_jc() {
+			return db_jc;
+		}
+
+		public void setDb_jc(String db_jc) {
+			this.db_jc = db_jc;
 		}
 	}
 }
