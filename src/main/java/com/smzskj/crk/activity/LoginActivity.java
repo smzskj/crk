@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.smzskj.crk.R;
@@ -45,7 +46,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 	private Button btnOffline;
 	private EditText edName, edPwddd;
 	private Spinner spinner;
-	private Button btnGet;
+	private ImageButton btnGet;
 	private List<DbBean.RowsBean> dbList = new ArrayList<>();
 
 	public static void startLoginActivity(Context context) {
@@ -83,7 +84,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 			e.printStackTrace();
 		}
 
-		getDBList();
+		if (!Constants.IP_DEFAULT.equals(Constants.IP)) {
+			getDBList();
+		}
 	}
 
 	private void initView() {
@@ -278,11 +281,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 							spinner.setSelection(i);
 						}
 					}
-
-					btnGet.setVisibility(View.GONE);
-				} else {
-					btnGet.setVisibility(View.VISIBLE);
 				}
+//					btnGet.setVisibility(View.GONE);
+//				 else {
+//					btnGet.setVisibility(View.VISIBLE);
+//				}
 			}
 		}
 	}

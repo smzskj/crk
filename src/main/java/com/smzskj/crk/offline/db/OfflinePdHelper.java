@@ -109,6 +109,7 @@ public class OfflinePdHelper extends SQLiteOpenHelper {
 			",pch" +    // 批次号
 			",rq" +    // 日期
 			",zt" +    // 状态(成功或其他)
+			",ztcode" +    // 状态code
 			")";
 
 	/**
@@ -129,6 +130,7 @@ public class OfflinePdHelper extends SQLiteOpenHelper {
 			",rq" +    // 日期
 			",sj" +    // 时间(到秒)
 			",zt" +    // 状态(成功或其他)
+			",ztcode" +    // 状态code
 			")";
 
 	@Override
@@ -155,6 +157,8 @@ public class OfflinePdHelper extends SQLiteOpenHelper {
 			db.execSQL(SqlCreateLxck);
 			sqlVersion5(db);
 		} else if (oldVersion == 4) {
+			sqlVersion5(db);
+		} else if (oldVersion == 5) {
 			sqlVersion5(db);
 		}
 	}

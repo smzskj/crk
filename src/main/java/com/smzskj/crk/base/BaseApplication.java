@@ -16,9 +16,6 @@ public class BaseApplication extends Application {
 	private LinkedList<Activity> activities = new LinkedList<>();
 	private static BaseApplication instance;
 
-	//构造方法
-	private BaseApplication() {
-	}
 
 	//实例化一次
 	public synchronized static BaseApplication getInstance() {
@@ -31,6 +28,10 @@ public class BaseApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+//		if (!Constants.IS_DEBUG) {
+			SysCrashHandler sysCrashHandler = SysCrashHandler.getInstance(getApplicationContext());
+			Thread.setDefaultUncaughtExceptionHandler(sysCrashHandler);
+//		}
 	}
 
 	// add Activity

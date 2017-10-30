@@ -1,5 +1,7 @@
 package com.smzskj.crk.utils;
 
+import com.smzskj.crk.BuildConfig;
+
 /**
  * Created by ztt on 2017/1/16.
  *
@@ -8,7 +10,8 @@ package com.smzskj.crk.utils;
 
 public class Constants {
 
-	public static boolean IS_DEBUG = false;
+	public static boolean IS_DEBUG = BuildConfig.DEBUG;
+//	public static boolean IS_DEBUG = true;
 
 	public static final int KEY_SCAN = 135;
 	public static final String CHAR_SET = "utf-8";

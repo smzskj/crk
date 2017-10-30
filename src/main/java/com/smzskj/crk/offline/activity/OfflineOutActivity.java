@@ -177,7 +177,11 @@ public class OfflineOutActivity extends BaseActivity implements View.OnClickList
 	@Override
 	public void onClick(View v) {
 		if (v == llQrjx) {
-			addPch();
+			if (TextUtils.isEmpty(tvSpm.getText().toString())) {
+				makeShortToase("请选择商品");
+			} else {
+				addPch();
+			}
 		} else if (v == llDz) {
 			showAlertDialog("是否出库？", new DialogInterface.OnClickListener() {
 				@Override

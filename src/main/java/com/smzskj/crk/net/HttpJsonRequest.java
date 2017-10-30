@@ -63,7 +63,7 @@ public class HttpJsonRequest implements Runnable {
 			jreq.put("direct", true);
 			jreq.put("service", service);
 			jreq.put("method", method);
-			jreq.put("zq", 2 * 60 * 1000 );
+			jreq.put("zq", 60 * 60 * 1000);
 			jreq.put("curMillis", System.currentTimeMillis());
 			JSONArray jparams = new JSONArray();
 			for (String arg : args) {
